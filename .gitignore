@@ -482,3 +482,4 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+/Saydalia-Online/Views/Shared/_NewLayout.cshtml
