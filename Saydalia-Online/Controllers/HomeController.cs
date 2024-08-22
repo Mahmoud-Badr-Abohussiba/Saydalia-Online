@@ -48,5 +48,10 @@ namespace Saydalia_Online.Controllers
         {
             return View();
         }
+
+        public IActionResult ShopSingle()
+        {
+            return View();
+        }
     }
 }
