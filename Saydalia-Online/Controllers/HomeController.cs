@@ -53,5 +53,15 @@ namespace Saydalia_Online.Controllers
         {
             return View();
         }
+
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
+        public IActionResult ThankYou()
+        {
+            return View();
+        }
     }
 }
