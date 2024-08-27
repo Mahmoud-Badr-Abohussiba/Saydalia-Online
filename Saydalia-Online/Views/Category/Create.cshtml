@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_Layout";
+
+}
+
+<h1>Create</h1>
+<br />
+<br />
+<form method="post" asp-action="Create" >
+    <div asp-validation-summary="All"></div>
+    <partial name="PartialViews/_CreateEditCategoryPartialView" />
+    <br />
+    <br />
+    <input type="submit" value="Submit" class="btn btn-primary" /> |
+    <a class="btn btn-light" asp-action="Index">Back To List</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
