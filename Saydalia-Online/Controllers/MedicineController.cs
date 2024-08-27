@@ -14,6 +14,8 @@ namespace Saydalia_Online.Controllers
 
         public IActionResult Index()
         {
+            var medicines = _dbContext.Medicines.ToList();
+            ViewBag.Medicines = medicines;
             return View();
         }
 
@@ -32,26 +34,26 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(MedicineViewModel modelVM)
+        public async Task<IActionResult> Create(MedicineViewModel medicinVM)
         {
             ViewBag.Categories = _dbContext.categories.ToList();
 
             if (ModelState.IsValid) {
-                modelVM.ImageName = await DocumentSettings.UploadFile(modelVM.Image, "images");
+                medicinVM.ImageName = await DocumentSettings.UploadFile(medicinVM.Image, "images");
                 var NewMedicine = new Medicine() 
                 {
-                    Name = modelVM.Name,
-                    Description = modelVM.Description,
-                    ImageName = modelVM.ImageName,
-                    Price = modelVM.Price,
-                    Stock = modelVM.Stock,
-                    Cat_Id = modelVM.Cat_Id
+                    Name = medicinVM.Name,
+                    Description = medicinVM.Description,
+                    ImageName = medicinVM.ImageName,
+                    Price = medicinVM.Price,
+                    Stock = medicinVM.Stock,
+                    Cat_Id = medicinVM.Cat_Id
                 };
                 _dbContext.Medicines.Add(NewMedicine);
                 _dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(modelVM);
+            return View(medicinVM);
         }
 
         [HttpGet]
@@ -75,12 +77,28 @@ namespace Saydalia_Online.Controllers
         public async Task<IActionResult> Edit([FromRoute] int id, MedicineViewModel modelVM)
         {
             ViewBag.Categories = _dbContext.categories.ToList();
+
             if (id != modelVM.Id)
                 return BadRequest();
+
+
             if (ModelState.IsValid)
             {
                 try
                 {
+
+                    var oldMedicine = _dbContext.Medicines.Where(m => m.Id == id).FirstOrDefault();
+
+                    if (oldMedicine == null)
+                        return BadRequest();
+
+                    if(oldMedicine.ImageName != null)
+                    {
+                        string oldImageName = oldMedicine.ImageName;
+                        DocumentSettings.DeleteFile(oldImageName, "images");
+                    }
+
+
                     var UpdatedMedicine = new Medicine()
                     {
                         CreatedAt = modelVM.CreatedAt,

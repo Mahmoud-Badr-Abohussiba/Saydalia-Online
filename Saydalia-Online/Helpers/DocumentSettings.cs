@@ -7,7 +7,7 @@
 
             string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\files", folderName);
 
-            string fileName = $"{Guid.NewGuid()}{file.FileName}";
+            string fileName = $"{Guid.NewGuid()}"+"_"+$"{file.FileName}";
 
             string filePath = Path.Combine(folderPath, fileName);
 
@@ -15,6 +15,18 @@
             await file.CopyToAsync(fs);
 
             return fileName;
+        }
+
+        public static bool DeleteFile(string fileName, string folderName)
+        {
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\files", folderName);
+            string filePath = Path.Combine(folderPath, fileName);
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+                return true;
+            }
+            return false;
         }
     }
 }

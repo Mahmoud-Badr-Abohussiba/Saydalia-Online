@@ -9,10 +9,12 @@ namespace Saydalia_Online.Controllers
     public class CategoryController : Controller
     {
         SaydaliaOnlineContext _dbContext = new SaydaliaOnlineContext();
+
         public IActionResult Index()
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult Create()
         {
