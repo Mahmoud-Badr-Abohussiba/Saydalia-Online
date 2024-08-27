@@ -9,7 +9,7 @@ namespace Saydalia_Online.Models
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Server= DESKTOP-00JH14J\\MSSQLSERVER08; Database= DepiMVCTask2; Trusted_Connection= True; TrustServerCertificate= True;");
+			optionsBuilder.UseSqlServer("Server= DESKTOP-00JH14J\\MSSQLSERVER08; Database= Saydalia-Online; Trusted_Connection= True; TrustServerCertificate= True;");
 			base.OnConfiguring(optionsBuilder);
 		}
 
