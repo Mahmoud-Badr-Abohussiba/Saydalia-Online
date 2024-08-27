@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Helpers;
 using Saydalia_Online.Models;
 using Saydalia_Online.ViewModels;
@@ -16,8 +17,11 @@ namespace Saydalia_Online.Controllers
             return View();
         }
 
-        public IActionResult Details() { 
-            return View();
+        public IActionResult Details(int id) 
+        {
+            var medicine = _dbContext.Medicines
+                                      .FirstOrDefault(m => m.Id == id);
+            return View(medicine);
         }
 
         [HttpGet]

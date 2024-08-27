@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Models;
 using System.Diagnostics;
 
@@ -8,6 +9,7 @@ namespace Saydalia_Online.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        SaydaliaOnlineContext context = new SaydaliaOnlineContext();
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -15,7 +17,10 @@ namespace Saydalia_Online.Controllers
 
         public IActionResult Index()
         {
-            return View();
+           var medicines = context.Medicines
+                   .Include(e => e.Categories)
+                   .ToList();
+            return View(medicines);
         }
 
         public IActionResult Privacy()
