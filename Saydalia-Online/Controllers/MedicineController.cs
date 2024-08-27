@@ -22,6 +22,7 @@ namespace Saydalia_Online.Controllers
         public IActionResult Details(int id) 
         {
             var medicine = _dbContext.Medicines
+                                     .Include(m => m.Categories)
                                       .FirstOrDefault(m => m.Id == id);
             return View(medicine);
         }

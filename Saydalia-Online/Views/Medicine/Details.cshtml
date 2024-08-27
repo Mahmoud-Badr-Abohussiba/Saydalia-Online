@@ -1,7 +1,7 @@
 ﻿@model Medicine
-@{
+@* @{
     ViewData["Title"] = "ShopSingle";
-}
+} *@
 
 <div class="bg-light py-3">
     <div class="container">
@@ -29,6 +29,13 @@
                     @Model.Description
                 </p>
 
+                <p>
+                    Left in Stock: @Model.Stock
+                </p>
+
+                <p>
+                    Category: @Model.Categories.Name
+                </p>
 
                 <p><del>$95.00</del>  <strong class="text-primary h4">@Model.Price</strong></p>
 
