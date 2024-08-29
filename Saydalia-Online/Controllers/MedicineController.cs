@@ -39,7 +39,7 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create() 
+        public IActionResult Create()
         {
             ViewBag.Categories = _dbContext.categories.ToList();
             return View();
@@ -50,9 +50,10 @@ namespace Saydalia_Online.Controllers
         {
             ViewBag.Categories = _dbContext.categories.ToList();
 
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 medicinVM.ImageName = await DocumentSettings.UploadFile(medicinVM.Image, "images");
-                var NewMedicine = new Medicine() 
+                var NewMedicine = new Medicine()
                 {
                     Name = medicinVM.Name,
                     Description = medicinVM.Description,
@@ -69,9 +70,13 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int ? id)
+        public IActionResult Edit(int? id)
         {
             var medicine = _dbContext.Medicines.FirstOrDefault(x => x.Id == id);
+            if (medicine == null)
+            {
+                return BadRequest();
+            }
             var model = new MedicineViewModel()
             {
                 Name = medicine.Name,
@@ -86,7 +91,7 @@ namespace Saydalia_Online.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit([FromRoute] int id, MedicineViewModel modelVM)
+        public async Task<IActionResult> Edit([FromRoute] int id, MedicineViewModel modelVM, IFormFile Image)
         {
             ViewBag.Categories = _dbContext.categories.ToList();
 
@@ -104,33 +109,28 @@ namespace Saydalia_Online.Controllers
                     if (oldMedicine == null)
                         return BadRequest();
 
-                    if(oldMedicine.ImageName != null)
+                    if (oldMedicine.ImageName != null)
                     {
                         string oldImageName = oldMedicine.ImageName;
                         DocumentSettings.DeleteFile(oldImageName, "images");
                     }
+                    modelVM.ImageName = await DocumentSettings.UploadFile(Image, "images");
+
+                    oldMedicine.Name = modelVM.Name;
+                    oldMedicine.Description = modelVM.Description;
+                    oldMedicine.ImageName = modelVM.ImageName;
+                    oldMedicine.Price = modelVM.Price;
+                    oldMedicine.Stock = modelVM.Stock;
+                    oldMedicine.Cat_Id = modelVM.Cat_Id;
+                    oldMedicine.UpdatedAt = DateTime.Now;
 
 
-                    var UpdatedMedicine = new Medicine()
-                    {
-                        CreatedAt = modelVM.CreatedAt,
-                        Name = modelVM.Name,
-                        Description = modelVM.Description,
-                        ImageName = modelVM.ImageName,
-                        Price = modelVM.Price,
-                        Stock = modelVM.Stock,
-                        Cat_Id = modelVM.Cat_Id,
-                        UpdatedAt = DateTime.Now,
-                        Id = modelVM.Id
-                    };
-                    
-                    var result = _dbContext.Update(UpdatedMedicine);
-                    await _dbContext.SaveChangesAsync();
+                    _dbContext.SaveChanges();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(string.Empty, ex.Message); 
+                    ModelState.AddModelError(string.Empty, ex.Message);
                 }
             }
             return View(modelVM);

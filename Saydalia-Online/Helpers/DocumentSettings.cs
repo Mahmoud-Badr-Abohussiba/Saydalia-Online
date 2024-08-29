@@ -2,7 +2,7 @@
 {
     public static class DocumentSettings
     {
-        public async static Task<string> UploadFile(IFormFile file, string folderName)
+        public async  static Task<string> UploadFile(IFormFile file, string folderName)
         {
 
             string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\files", folderName);
