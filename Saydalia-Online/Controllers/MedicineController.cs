@@ -31,13 +31,13 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(MedicineViewModel medicinVM)
+        public async Task<IActionResult> Create(MedicineViewModel medicinVM)
         {
             ViewBag.Categories = _dbContext.categories.ToList();
 
             if (ModelState.IsValid)
             {
-                medicinVM.ImageName = DocumentSettings.UploadFile(medicinVM.Image, "images");
+                medicinVM.ImageName = await DocumentSettings.UploadFile(medicinVM.Image, "images");
                 var NewMedicine = new Medicine()
                 {
                     Name = medicinVM.Name,
@@ -48,7 +48,7 @@ namespace Saydalia_Online.Controllers
                     Cat_Id = medicinVM.Cat_Id
                 };
                 _dbContext.Medicines.Add(NewMedicine);
-                _dbContext.SaveChangesAsync();
+                _dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(medicinVM);
