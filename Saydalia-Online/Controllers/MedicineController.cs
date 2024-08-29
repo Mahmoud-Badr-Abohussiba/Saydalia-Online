@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Helpers;
 using Saydalia_Online.Models;
@@ -12,6 +13,16 @@ namespace Saydalia_Online.Controllers
 
         SaydaliaOnlineContext _dbContext = new SaydaliaOnlineContext();
 
+        //OnActionExecuting function is being called when any action in it's containing controller called
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            var catgs = _dbContext.categories.ToList();
+            //var medicineCategories = GetMedicineCategories();
+
+            ViewBag.MedicineCategories = catgs;
+
+            base.OnActionExecuting(filterContext);
+        }
         public IActionResult Index()
         {
             var medicines = _dbContext.Medicines.ToList();
