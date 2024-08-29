@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Helpers;
 using Saydalia_Online.Models;
 using Saydalia_Online.ViewModels;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Saydalia_Online.Controllers
 {
@@ -10,11 +12,29 @@ namespace Saydalia_Online.Controllers
     {
         SaydaliaOnlineContext _dbContext = new SaydaliaOnlineContext();
 
+        //OnActionExecuting function is being called when any action in it's containing controller called
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            var catgs = _dbContext.categories.ToList();
+            //var medicineCategories = GetMedicineCategories();
+
+            ViewBag.MedicineCategories = catgs;
+
+            base.OnActionExecuting(filterContext);
+        }
         public IActionResult Index()
         {
             return View();
         }
 
+        public IActionResult Details(int id)
+        {
+            var cat = _dbContext.categories
+                                .Include(c => c.Medicines)
+                                .FirstOrDefault(c => c.Id == id);
+                                
+            return View(cat);
+        }
         [HttpGet]
         public IActionResult Create()
         {
