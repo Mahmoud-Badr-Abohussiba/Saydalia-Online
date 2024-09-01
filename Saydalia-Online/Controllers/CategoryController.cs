@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Helpers;
 using Saydalia_Online.Models;
-using Saydalia_Online.ViewModels;
 using System.Reflection.Metadata.Ecma335;
 
 namespace Saydalia_Online.Controllers

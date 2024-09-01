@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Helpers;
 using Saydalia_Online.Models;
-using Saydalia_Online.ViewModels;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Saydalia_Online.Controllers
@@ -27,7 +26,7 @@ namespace Saydalia_Online.Controllers
         {
             var medicines = _dbContext.Medicines.ToList();
             ViewBag.Medicines = medicines;
-            return View();
+            return View(medicines);
         }
 
         public IActionResult Details(int id) 
@@ -46,27 +45,21 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(MedicineViewModel medicinVM)
+        public async Task<IActionResult> Create(Medicine medicin ,  IFormFile image)
         {
             ViewBag.Categories = _dbContext.categories.ToList();
-
             if (ModelState.IsValid)
             {
-                medicinVM.ImageName = await DocumentSettings.UploadFile(medicinVM.Image, "images");
-                var NewMedicine = new Medicine()
+                if (image != null && image.Length > 0)
                 {
-                    Name = medicinVM.Name,
-                    Description = medicinVM.Description,
-                    ImageName = medicinVM.ImageName,
-                    Price = medicinVM.Price,
-                    Stock = medicinVM.Stock,
-                    Cat_Id = medicinVM.Cat_Id
-                };
-                _dbContext.Medicines.Add(NewMedicine);
+                    medicin.ImageName = await DocumentSettings.UploadFile(image, "images");
+                }
+
+                _dbContext.Medicines.Add(medicin);
                 _dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(medicinVM);
+            return View(medicin);
         }
 
         [HttpGet]
@@ -77,25 +70,15 @@ namespace Saydalia_Online.Controllers
             {
                 return BadRequest();
             }
-            var model = new MedicineViewModel()
-            {
-                Name = medicine.Name,
-                Description = medicine.Description,
-                ImageName = medicine.ImageName,
-                Price = medicine.Price,
-                Stock = medicine.Stock,
-                Cat_Id = medicine.Cat_Id,
-                UpdatedAt = DateTime.Now
-            };
             ViewBag.Categories = _dbContext.categories.ToList();
-            return View(model);
+            return View(medicine);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit([FromRoute] int id, MedicineViewModel modelVM, IFormFile Image)
+        public async Task<IActionResult> Edit([FromRoute] int id, Medicine model, IFormFile Image)
         {
             ViewBag.Categories = _dbContext.categories.ToList();
 
-            if (id != modelVM.Id)
+            if (id != model.Id)
                 return BadRequest();
 
 
@@ -114,14 +97,14 @@ namespace Saydalia_Online.Controllers
                         string oldImageName = oldMedicine.ImageName;
                         DocumentSettings.DeleteFile(oldImageName, "images");
                     }
-                    modelVM.ImageName = await DocumentSettings.UploadFile(Image, "images");
-
-                    oldMedicine.Name = modelVM.Name;
-                    oldMedicine.Description = modelVM.Description;
-                    oldMedicine.ImageName = modelVM.ImageName;
-                    oldMedicine.Price = modelVM.Price;
-                    oldMedicine.Stock = modelVM.Stock;
-                    oldMedicine.Cat_Id = modelVM.Cat_Id;
+                    model.ImageName = await DocumentSettings.UploadFile(Image, "images");
+                    model.UpdatedAt = DateTime.Now;
+                    oldMedicine.Name = model.Name;
+                    oldMedicine.Description = model.Description;
+                    oldMedicine.ImageName = model.ImageName;
+                    oldMedicine.Price = model.Price;
+                    oldMedicine.Stock = model.Stock;
+                    oldMedicine.Cat_Id = model.Cat_Id;
                     oldMedicine.UpdatedAt = DateTime.Now;
 
 
@@ -133,8 +116,28 @@ namespace Saydalia_Online.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                 }
             }
-            return View(modelVM);
+            return View(model);
         }
 
+        public IActionResult DisplayUsingNameFromAToZ()
+        {
+            var medicines = _dbContext.Medicines.OrderBy(m => m.Name).ToList();
+            return View(nameof(Index) ,medicines);
+        }
+        public IActionResult DisplayUsingNameFromZToA()
+        {
+            var medicines = _dbContext.Medicines.OrderByDescending(m => m.Name).ToList();
+            return View(medicines);
+        }
+        public IActionResult DisplayUsingPriceLowToHigh()
+        {
+            var medicines = _dbContext.Medicines.OrderBy(m => m.Price).ToList();
+            return View(medicines);
+        }
+        public IActionResult DisplayUsingPriceHighToLow()
+        {
+            var medicines = _dbContext.Medicines.OrderByDescending(m => m.Price).ToList();
+            return View(medicines);
+        }
     }
 }
