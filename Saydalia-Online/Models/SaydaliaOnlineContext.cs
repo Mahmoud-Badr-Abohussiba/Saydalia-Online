@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Saydalia_Online.Models
 {
-	public class SaydaliaOnlineContext : DbContext
+	public class SaydaliaOnlineContext : IdentityDbContext<IdentityUser>
 	{
 		public DbSet<Category> categories { get; set; }
 		public DbSet<Medicine> Medicines { get; set; }

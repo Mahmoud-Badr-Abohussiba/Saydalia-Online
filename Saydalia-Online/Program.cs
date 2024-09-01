@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Saydalia_Online.Data;
+using Saydalia_Online.Areas.Identity.Data;
+
 namespace Saydalia_Online
 {
     public class Program
@@ -5,9 +10,16 @@ namespace Saydalia_Online
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var connectionString = builder.Configuration.GetConnectionString("Saydalia_OnlineContextConnection") ?? throw new InvalidOperationException("Connection string 'Saydalia_OnlineContextConnection' not found.");
+
+            builder.Services.AddDbContext<Saydalia_OnlineContext>(options => options.UseSqlServer(connectionString));
+
+
+            builder.Services.AddDefaultIdentity<Saydalia_Online_AuthUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<Saydalia_OnlineContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
 
             var app = builder.Build();
 
@@ -30,6 +42,7 @@ namespace Saydalia_Online
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            app.MapRazorPages();
             app.Run();
         }
     }
