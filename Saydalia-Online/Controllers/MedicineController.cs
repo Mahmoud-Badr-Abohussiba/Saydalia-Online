@@ -82,12 +82,13 @@ namespace Saydalia_Online.Controllers
                 return BadRequest();
 
 
+
             if (ModelState.IsValid)
             {
                 try
                 {
 
-                    var oldMedicine = _dbContext.Medicines.Where(m => m.Id == id).FirstOrDefault();
+                    var oldMedicine = _dbContext.Medicines.Where(m => m.Id == id).AsNoTracking().FirstOrDefault();
 
                     if (oldMedicine == null)
                         return BadRequest();
@@ -97,17 +98,11 @@ namespace Saydalia_Online.Controllers
                         string oldImageName = oldMedicine.ImageName;
                         DocumentSettings.DeleteFile(oldImageName, "images");
                     }
+
                     model.ImageName = await DocumentSettings.UploadFile(Image, "images");
                     model.UpdatedAt = DateTime.Now;
-                    oldMedicine.Name = model.Name;
-                    oldMedicine.Description = model.Description;
-                    oldMedicine.ImageName = model.ImageName;
-                    oldMedicine.Price = model.Price;
-                    oldMedicine.Stock = model.Stock;
-                    oldMedicine.Cat_Id = model.Cat_Id;
-                    oldMedicine.UpdatedAt = DateTime.Now;
-
-
+                
+                    _dbContext.Medicines.Update(model);
                     _dbContext.SaveChanges();
                     return RedirectToAction(nameof(Index));
                 }
