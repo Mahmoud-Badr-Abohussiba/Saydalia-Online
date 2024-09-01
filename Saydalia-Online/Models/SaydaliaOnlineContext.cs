@@ -11,7 +11,7 @@ namespace Saydalia_Online.Models
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=SaydaliaOnline;Integrated Security=True;Trust Server Certificate=True ");
+			optionsBuilder.UseSqlServer("Server=.; Database= SaydaliaOnline; Trusted_Connection= True; TrustServerCertificate= True;");
 			base.OnConfiguring(optionsBuilder);
 		}
 

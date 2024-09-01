@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Medicine>
 @{
     ViewData["Title"] = "Store";
 }
@@ -28,17 +28,18 @@
             <button type="button" class="btn btn-secondary btn-md dropdown-toggle px-4" id="dropdownMenuReference"
               data-toggle="dropdown">Reference</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-              <a class="dropdown-item" href="#">Relevance</a>
-              <a class="dropdown-item" href="#">Name, A to Z</a>
-              <a class="dropdown-item" href="#">Name, Z to A</a>
+@*                     <a class="dropdown-item" href="#">Relevance</a>*@
+                    <a class="dropdown-item" asp-action="DisplayUsingNameFromAToZ">Name, A to Z</a>
+                    <a class="dropdown-item" asp-action="DisplayUsingNameFromZToA">Name, Z to A</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Price, low to high</a>
-              <a class="dropdown-item" href="#">Price, high to low</a>
+                    <a class="dropdown-item" asp-action="DisplayUsingPriceLowToHigh">Price, low to high</a>
+                    <a class="dropdown-item" asp-action="DisplayUsingPriceHighToLow">Price, high to low</a>
             </div>
           </div>
         </div>
 
-        <div class="row">
+        @*****************************show products**********************************************@
+     @*    <div class="row">
           <div class="col-sm-6 col-lg-4 text-center item mb-4">
             <span class="tag">Sale</span>
             <a asp-action="ShopSingle" asp-controller="Home"> <img src="/images/product_01.png" alt="Image"></a>
@@ -108,7 +109,24 @@
             <h3 class="text-dark"><a asp-action="ShopSingle" asp-controller="Home">Poo Pourri</a></h3>
             <p class="price"><del>$89</del> &mdash; $38.00</p>
           </div>
+        </div> *@
+
+        <div class="row">
+            @foreach (var medicine in Model)
+            {
+                <div class="col-sm-6 col-lg-4 text-center item mb-4">
+                    <span class="tag">Sale</span>
+                    <a asp-action="Details" asp-controller="Medicine" asp-route-id="@medicine.Id">
+                        @* <img src="~/images/@medicine.ImageName" alt="@medicine.Name" /> *@
+                        <img src="~/files/images/@medicine.ImageName" class="card-img-top img-fluid mb-3" style="max-height:300px; max-width:250px;" alt="@medicine.Name">
+
+                    </a>
+                    <h3 class="text-dark"><a asp-action="Details" asp-controller="Medicine" asp-route-id="@medicine.Id">@medicine.Name</a></h3>
+                    <p class="price"><del>$95.00</del> &mdash; $@medicine.Price</p>
+                </div>
+            }
         </div>
+        @********************************************************************************@
         <div class="row mt-5">
           <div class="col-md-12 text-center">
             <div class="site-block-27">

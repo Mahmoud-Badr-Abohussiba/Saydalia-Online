@@ -228,9 +228,15 @@ namespace Saydalia_Online.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -248,12 +254,13 @@ namespace Saydalia_Online.Migrations
                     b.Property<int?>("Cat_Id")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -265,6 +272,9 @@ namespace Saydalia_Online.Migrations
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

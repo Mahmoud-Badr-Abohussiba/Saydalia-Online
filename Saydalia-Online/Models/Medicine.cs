@@ -12,7 +12,7 @@ namespace Saydalia_Online.Models
         public string Name { get; set; }
 
         [Display(Name = "picture of Midicine")]
-        public string ImageName { get; set; }
+        public string ? ImageName { get; set; }
 
         [Display(Name = "Description")]
         public string Description { get; set; }
@@ -22,12 +22,16 @@ namespace Saydalia_Online.Models
 
         [Display(Name = "Quantity of stock")]
         public int	Stock { get; set; }
-
+	
 		[ForeignKey("Categories")]
 		public int? Cat_Id { get; set; }
+		
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime ? UpdatedAt { get; set; }
+    
 
         [Display(Name = "Category Of Medicine")]
 
-        public virtual Category Categories { get; set; }
+        public virtual Category? Categories { get; set; }
 	}
 }
