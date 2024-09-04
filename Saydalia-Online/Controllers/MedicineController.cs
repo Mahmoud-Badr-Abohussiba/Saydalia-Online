@@ -12,6 +12,7 @@ namespace Saydalia_Online.Controllers
 
         SaydaliaOnlineContext _dbContext = new SaydaliaOnlineContext();
 
+
         //OnActionExecuting function is being called when any action in it's containing controller called
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

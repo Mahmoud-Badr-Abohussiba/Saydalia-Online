@@ -8,7 +8,10 @@ namespace Saydalia_Online.Controllers
         {
             return View();
         }
-
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
         public IActionResult Add()
         {
             return View();
