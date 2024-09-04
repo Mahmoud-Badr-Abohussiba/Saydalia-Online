@@ -11,6 +11,7 @@ namespace Saydalia_Online.Controllers
         private readonly ILogger<HomeController> _logger;
 
         SaydaliaOnlineContext context = new SaydaliaOnlineContext();
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;

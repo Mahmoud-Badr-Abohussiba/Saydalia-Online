@@ -19,4 +19,10 @@ public class Saydalia_OnlineContext : IdentityDbContext<Saydalia_Online_AuthUser
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer("Server=.; Database= SaydaliaOnline; Trusted_Connection= True; TrustServerCertificate= True;");
+        base.OnConfiguring(optionsBuilder);
+    }
 }

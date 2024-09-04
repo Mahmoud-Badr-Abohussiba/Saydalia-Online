@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Saydalia_Online.Models
 {
 	public class SaydaliaOnlineContext : IdentityDbContext<IdentityUser>
 	{
-		public DbSet<Category> categories { get; set; }
+        //public SaydaliaOnlineContext(DbContextOptions<SaydaliaOnlineContext> options) : base(options)
+        //{
+
+        //}
+        public DbSet<Category> categories { get; set; }
 		public DbSet<Medicine> Medicines { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

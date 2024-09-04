@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Data;
 using Saydalia_Online.Areas.Identity.Data;
+using Saydalia_Online.Models;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
 namespace Saydalia_Online
 {
@@ -12,8 +14,9 @@ namespace Saydalia_Online
             var builder = WebApplication.CreateBuilder(args);
             var connectionString = builder.Configuration.GetConnectionString("Saydalia_OnlineContextConnection") ?? throw new InvalidOperationException("Connection string 'Saydalia_OnlineContextConnection' not found.");
 
-            builder.Services.AddDbContext<Saydalia_OnlineContext>(options => options.UseSqlServer(connectionString));
+            //builder.Services.AddDbContext<SaydaliaOnlineContext>(options => options.UseSqlServer(connectionString));
 
+            builder.Services.AddDbContext<Saydalia_OnlineContext>(options => options.UseSqlServer(connectionString));
 
             builder.Services.AddDefaultIdentity<Saydalia_Online_AuthUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<Saydalia_OnlineContext>();
 
