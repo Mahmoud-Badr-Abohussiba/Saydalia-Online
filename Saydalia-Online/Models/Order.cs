@@ -14,7 +14,9 @@ namespace Saydalia_Online.Models
         [ForeignKey("User")]
         public string UserID { get; set; }
         public IdentityUser User { get; set; }                  
-        public ICollection<OrderItem> OrderItems { get; set; } 
+        public ICollection<OrderItem> OrderItems { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? UpdatedAt { get; set; }
     }
 
 }

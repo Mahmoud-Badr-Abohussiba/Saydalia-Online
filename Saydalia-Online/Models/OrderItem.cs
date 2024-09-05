@@ -10,10 +10,12 @@ namespace Saydalia_Online.Models
         [ForeignKey("Order")]
         public int OrderID { get; set; }
         // Navigation Properties
-        public Order ? Order { get; set; }
+        public Order Order { get; set; }
         [ForeignKey("Medicine")]
         public int MedicineID { get; set; }
-        public Medicine Medicine { get; set; } 
+        public Medicine Medicine { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime ? UpdatedAt { get; set; }
     }
 
 }
