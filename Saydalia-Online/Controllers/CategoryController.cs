@@ -23,10 +23,13 @@ namespace Saydalia_Online.Controllers
         }
         public IActionResult Index()
         {
-            return View();
-        }
 
-        public IActionResult Details(int id)
+			var categoryid = _dbContext.categories.ToList();
+
+			return View(categoryid);
+		}
+
+		public IActionResult Details(int id)
         {
             var cat = _dbContext.categories
                                 .Include(c => c.Medicines)
