@@ -4,6 +4,8 @@ using Saydalia_Online.Data;
 using Saydalia_Online.Areas.Identity.Data;
 using Saydalia_Online.Models;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
+using Saydalia_Online.InterfaceRepositories;
+using Saydalia_Online.Repositories;
 
 namespace Saydalia_Online
 {
@@ -17,6 +19,17 @@ namespace Saydalia_Online
             //builder.Services.AddDbContext<SaydaliaOnlineContext>(options => options.UseSqlServer(connectionString));
 
             builder.Services.AddDbContext<Saydalia_OnlineContext>(options => options.UseSqlServer(connectionString));
+            
+            builder.Services.AddDbContext<SaydaliaOnlineContext>(
+                options => {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+            },
+                ServiceLifetime.Transient);
+
+
+
+            builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             builder.Services.AddDefaultIdentity<Saydalia_Online_AuthUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<Saydalia_OnlineContext>();
 
