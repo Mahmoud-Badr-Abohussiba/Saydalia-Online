@@ -95,7 +95,7 @@ namespace Saydalia_Online.Controllers
                 try
                 {
 
-                    var oldMedicine = await _medicineRepository.GetById(id);
+                    var oldMedicine = await _medicineRepository.GetByIdAsNoTracking(id);
 
                     if (oldMedicine == null)
                         return BadRequest();

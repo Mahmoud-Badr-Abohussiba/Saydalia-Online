@@ -10,6 +10,7 @@ namespace Saydalia_Online.InterfaceRepositories
         Task<IEnumerable<Medicine>> DisplayUsingPriceLowToHigh();
         Task<IEnumerable<Medicine>> DisplayUsingPriceHighToLow();
         Task<IEnumerable<Medicine>> DisplayAllBetweenTwoPrices(int minPrice, int maxPrice);
+        Task<Medicine> GetByIdAsNoTracking(int id);
 
     }
 }

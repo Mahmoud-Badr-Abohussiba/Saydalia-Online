@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.InterfaceRepositories;
 using Saydalia_Online.Models;
 
@@ -42,6 +43,21 @@ namespace Saydalia_Online.Repositories
         public async Task<IEnumerable<Medicine>> DisplayUsingPriceLowToHigh()
         {
             return await _dbContext.Medicines.OrderByDescending(m => m.Price).ToListAsync();
+        }
+
+        public async Task<Medicine> GetByIdAsNoTracking(int id)
+        {
+            var medicine = await _dbContext.Medicines
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync(m => m.Id == id);
+
+            // Check if the medicine was found, if not, throw an exception.
+            if (medicine == null)
+            {
+                throw new KeyNotFoundException($"Medicine with ID {id} was not found.");
+            }
+
+            return medicine;
         }
     }
 }
