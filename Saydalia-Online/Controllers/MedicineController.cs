@@ -135,5 +135,12 @@ namespace Saydalia_Online.Controllers
             var medicines = _dbContext.Medicines.OrderByDescending(m => m.Price).ToList();
             return View(medicines);
         }
+
+        public IActionResult Search(string search)
+        {
+            var medicines = _dbContext.Medicines.Where(m=>m.Name.Contains(search)).ToList();
+            ViewBag.Medicines = medicines;
+            return View("Index", medicines);
+        }
     }
 }

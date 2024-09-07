@@ -25,40 +25,36 @@
 <a asp-action="Index" asp-controller="Category"> </a>
 
 <div>
-
-	<h1>Categories</h1>
-
-	<table>
-
-		<div class="container">
+	<div class="container">
 
 
-			<div class="row align-content-lg-start-border border-danger">
+		<h1>Categories</h1>
+        <table class="table table-bordered">
 
-				<div class="col-2 border border-danger ">
+				<thead>
+                    <th>ID</th>
+                    <th>Neme</th>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
 
-					Id
-				</div>
+                        <td>@item.Id</td>
 
-				<div class="col-2 border border-danger ">
+                        <td>@item.Name</td>
 
-					Name
-				</div>
+                    </tr>
+                }
+                </tbody>
+				
 
-			</div>
 
+			
 
-			@foreach (var item in Model)
-			{
-			<tr>
+        </table>
 
-				<td>Id:@item.Id</td>
-
-				<td>Name:@item.Name</td>
-
-			</tr>
-			}
-	</table>
+	</div>
 
 </div>
 
