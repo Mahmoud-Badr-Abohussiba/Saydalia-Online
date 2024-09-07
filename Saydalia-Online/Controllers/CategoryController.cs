@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Helpers;
+using Saydalia_Online.InterfaceRepositories;
 using Saydalia_Online.Models;
 using System.Reflection.Metadata.Ecma335;
 
@@ -9,31 +10,34 @@ namespace Saydalia_Online.Controllers
 {
     public class CategoryController : Controller
     {
-        SaydaliaOnlineContext _dbContext = new SaydaliaOnlineContext();
+        private readonly ICategoryRepository _categoryRepository;
+
+        public CategoryController(ICategoryRepository categoryRepository)
+        {
+            _categoryRepository = categoryRepository;
+        }
 
         //OnActionExecuting function is being called when any action in it's containing controller called
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        public override async void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var catgs = _dbContext.categories.ToList();
+            var catgs = await _categoryRepository.GetAll();
             //var medicineCategories = GetMedicineCategories();
 
             ViewBag.MedicineCategories = catgs;
 
             base.OnActionExecuting(filterContext);
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
-			var categoryid = _dbContext.categories.ToList();
+			var categoryid = await _categoryRepository.GetAll();
 
 			return View(categoryid);
 		}
 
-		public IActionResult Details(int id)
+		public async Task<IActionResult> Details(int id)
         {
-            var cat = _dbContext.categories
-                                .Include(c => c.Medicines)
-                                .FirstOrDefault(c => c.Id == id);
+            var cat = await _categoryRepository.GetById(id);
                                 
             return View(cat);
         }
@@ -44,15 +48,14 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Category model)
+        public async Task<IActionResult> Create(Category model)
         {
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _dbContext.categories.Add(model);
-                    _dbContext.SaveChanges();
+                    await _categoryRepository.Add(model);
                     return RedirectToAction(nameof(Index));
                 }catch(Exception error)
                 {
@@ -66,7 +69,7 @@ namespace Saydalia_Online.Controllers
         [HttpGet]
         public IActionResult Edit(int ? id)
         {
-            var category = _dbContext.categories.FirstOrDefault(c => c.Id == id);
+            var category = _categoryRepository.GetById(id.Value);
             return View(category);
         }
         [HttpPost]
@@ -78,12 +81,12 @@ namespace Saydalia_Online.Controllers
             {
                 try
                 {
-                    var category = _dbContext.categories.FirstOrDefault(c => c.Id == id);
+                    var category = await _categoryRepository.GetById(id.Value);
 
                     category.UpdatedAt = DateTime.Now;
                     category.Name = model.Name;
                     //_dbContext.categories.Update(model);
-                    await _dbContext.SaveChangesAsync();
+                    await _categoryRepository.Update(category);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)

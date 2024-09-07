@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using Saydalia_Online.InterfaceRepositories;
 using Saydalia_Online.Models;
 using System.Diagnostics;
 
@@ -9,12 +10,14 @@ namespace Saydalia_Online.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IMedicineRepository _medicineRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        SaydaliaOnlineContext context = new SaydaliaOnlineContext();
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger , IMedicineRepository medicineRepository , ICategoryRepository categoryRepository)
         {
             _logger = logger;
+            _medicineRepository = medicineRepository;
+            _categoryRepository=categoryRepository;
         }
 
 
@@ -41,17 +44,15 @@ namespace Saydalia_Online.Controllers
         //}
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var medicines = context.Medicines
-                    .Include(e => e.Categories)
-                    .ToList();
+            var medicines = await _medicineRepository.GetAll();
             return View(medicines);
         }
         //OnActionExecuting function is being called when any action in it's containing controller called
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        public override async void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var catgs = context.categories.ToList();
+            var catgs = await _categoryRepository.GetAll();
             //var medicineCategories = GetMedicineCategories();
 
             ViewBag.MedicineCategories = catgs;
@@ -69,11 +70,9 @@ namespace Saydalia_Online.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Store()
+        public async Task<IActionResult> Store()
         {
-            var medicines = context.Medicines
-                    .Include(e => e.Categories)
-                    .ToList();
+            var medicines = await _medicineRepository.GetAll();
             return View(medicines);
         }
 
@@ -107,30 +106,29 @@ namespace Saydalia_Online.Controllers
             return View();
         }
 
-        public IActionResult DisplayUsingNameFromAToZ()
+        public async Task<IActionResult> DisplayUsingNameFromAToZ()
         {
-            var medicines = context.Medicines.OrderBy(m => m.Name).ToList();
-            Console.WriteLine(medicines);
+            var medicines = await _medicineRepository.DisplayUsingNameFromAToZ();
             return View(nameof(Store), medicines);
         }
-        public IActionResult DisplayUsingNameFromZToA()
+        public async Task<IActionResult> DisplayUsingNameFromZToA()
         {
-            var medicines = context.Medicines.OrderByDescending(m => m.Name).ToList();
+            var medicines = await _medicineRepository.DisplayUsingNameFromZToA();
             return View(nameof(Store), medicines);
         }
-        public IActionResult DisplayUsingPriceLowToHigh()
+        public async Task<IActionResult> DisplayUsingPriceLowToHigh()
         {
-            var medicines = context.Medicines.OrderBy(m => m.Price).ToList();
-            return View(nameof(Store), medicines);
+            var medicines = await _medicineRepository.DisplayUsingPriceLowToHigh();
+            return View(nameof(Store) , medicines);
         }
-        public IActionResult DisplayUsingPriceHighToLow()
+        public async Task<IActionResult> DisplayUsingPriceHighToLow()
         {
-            var medicines = context.Medicines.OrderByDescending(m => m.Price).ToList();
-            return View(nameof(Store), medicines);
+            var medicines = await _medicineRepository.DisplayUsingPriceHighToLow();
+            return View(nameof(Store) , medicines);
         }
-        public IActionResult DisplayAllBetweenTwoPrices(int minPrice , int maxPrice)
+        public async Task<IActionResult> DisplayAllBetweenTwoPrices(int minPrice , int maxPrice)
         {
-            var medicines = context.Medicines.Where( m => m.Price >= minPrice && m.Price <= maxPrice).ToList();
+            var medicines = await _medicineRepository.DisplayAllBetweenTwoPrices(minPrice , maxPrice);
             return View(nameof(Store) , medicines);
         }
     }
