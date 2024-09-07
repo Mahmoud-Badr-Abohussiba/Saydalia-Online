@@ -141,9 +141,9 @@ namespace Saydalia_Online.Controllers
             return View(medicines);
         }
 
-        public IActionResult Search(string search)
+        public async Task<IActionResult> Search(string search)
         {
-            var medicines = _dbContext.Medicines.Where(m=>m.Name.Contains(search)).ToList();
+            var medicines = await _medicineRepository.SearchByName(search);
             ViewBag.Medicines = medicines;
             return View("Index", medicines);
         }

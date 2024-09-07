@@ -59,5 +59,10 @@ namespace Saydalia_Online.Repositories
 
             return medicine;
         }
+
+        public async Task<IEnumerable<Medicine>> SearchByName(string name)
+        {
+            return await _dbContext.Medicines.Where(m => m.Name.Contains(name)).ToListAsync();
+        }
     }
 }
