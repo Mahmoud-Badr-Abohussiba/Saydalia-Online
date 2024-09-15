@@ -5,6 +5,8 @@
 
 # dotenv files
 .env
+*/.env
+*/appsettings.*.json
 
 # User-specific files
 *.rsuser
@@ -483,3 +485,4 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 /Saydalia-Online/Views/Shared/_NewLayout.cshtml
+Saydalia-Online/appsettings.Development.json
