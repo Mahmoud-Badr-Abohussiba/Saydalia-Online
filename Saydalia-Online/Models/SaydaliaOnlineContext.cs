@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,7 +16,18 @@ namespace Saydalia_Online.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
-  //      protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Category>()
+				.HasIndex(c => c.Name)
+				.IsUnique();
+
+			base.OnModelCreating(modelBuilder);
+		}
+
+
+
+		//      protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		//{
 		//	optionsBuilder.UseSqlServer("Server=.; Database= SaydaliaOnline; Trusted_Connection= True; TrustServerCertificate= True;");
 		//	base.OnConfiguring(optionsBuilder);
