@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Saydalia_Online.Data;
 using Saydalia_Online.Areas.Identity.Data;
 using Saydalia_Online.Models;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
@@ -16,19 +15,11 @@ namespace Saydalia_Online
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var connectionString = builder.Configuration.GetConnectionString("Saydalia_OnlineContextConnection") ?? throw new InvalidOperationException("Connection string 'Saydalia_OnlineContextConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection string 'Default' not found.");
 
-            //builder.Services.AddDbContext<SaydaliaOnlineContext>(options => options.UseSqlServer(connectionString));
 
-            builder.Services.AddDbContext<Saydalia_OnlineContext>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<SaydaliaOnlineContext>(options => options.UseSqlServer(connectionString));
             
-            builder.Services.AddDbContext<SaydaliaOnlineContext>(
-                options => {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-            },
-                ServiceLifetime.Transient);
-
-
 
             builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -37,7 +28,7 @@ namespace Saydalia_Online
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 
-            builder.Services.AddDefaultIdentity<Saydalia_Online_AuthUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<Saydalia_OnlineContext>();
+            builder.Services.AddDefaultIdentity<Saydalia_Online_AuthUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SaydaliaOnlineContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

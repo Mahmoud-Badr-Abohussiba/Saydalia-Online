@@ -1,26 +1,25 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Saydalia_Online.Areas.Identity.Data;
 
 namespace Saydalia_Online.Models
 {
-	public class SaydaliaOnlineContext : IdentityDbContext<IdentityUser>
-	{
-		public SaydaliaOnlineContext(DbContextOptions<SaydaliaOnlineContext> options) : base(options)
-		{
-		}
-		public DbSet<Category> categories { get; set; }
-		public DbSet<Medicine> Medicines { get; set; }
+    public class SaydaliaOnlineContext : IdentityDbContext<Saydalia_Online_AuthUser>
+    {
+        public SaydaliaOnlineContext(DbContextOptions<SaydaliaOnlineContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Category> categories { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
-  //      protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		//{
-		//	optionsBuilder.UseSqlServer("Server=.; Database= SaydaliaOnline; Trusted_Connection= True; TrustServerCertificate= True;");
-		//	base.OnConfiguring(optionsBuilder);
-		//}
-
-
-	}
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            // Customize your model if needed
+        }
+    }
 }
