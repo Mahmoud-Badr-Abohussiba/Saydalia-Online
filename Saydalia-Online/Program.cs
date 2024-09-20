@@ -18,7 +18,7 @@ namespace Saydalia_Online
             var connectionString = builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection string 'Default' not found.");
 
 
-            builder.Services.AddDbContext<SaydaliaOnlineContext>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<SaydaliaOnlineContext>(options => options.UseSqlServer(connectionString),ServiceLifetime.Transient);
             
 
             builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();

@@ -21,29 +21,6 @@ namespace Saydalia_Online.Controllers
         }
 
 
-
-
-        //private List<MedicineCategory> GetMedicineCategories()
-        //{
-        //    // Fetch or generate the list of medicine categories
-        //    return new List<MedicineCategory>
-        //{
-        //    new MedicineCategory
-        //    {
-        //        Name = "Supplements",
-        //        SubCategories = new List<MedicineCategory>
-        //        {
-        //            new MedicineCategory { Name = "Vitamins" },
-        //            new MedicineCategory { Name = "Diet & Nutrition" },
-        //            new MedicineCategory { Name = "Tea & Coffee" }
-        //        }
-        //    },
-        //    new MedicineCategory { Name = "Diet & Nutrition" },
-        //    new MedicineCategory { Name = "Tea & Coffee" }
-        //};
-        //}
-
-
         public async Task<IActionResult> Index()
         {
             var medicines = await _medicineRepository.GetAll();
@@ -53,7 +30,6 @@ namespace Saydalia_Online.Controllers
         public override async void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var catgs = await _categoryRepository.GetAll();
-            //var medicineCategories = GetMedicineCategories();
 
             ViewBag.MedicineCategories = catgs;
 

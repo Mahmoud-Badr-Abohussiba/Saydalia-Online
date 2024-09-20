@@ -35,7 +35,7 @@ namespace Saydalia_Online.Controllers
         public async Task<IActionResult> Index()
         {
             var medicines = await _medicineRepository.GetAll();
-            //ViewBag.Medicines = medicines;
+            ViewBag.Medicines = medicines;
             return View(medicines);
         }
 
