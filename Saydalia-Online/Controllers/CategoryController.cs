@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Helpers;
-using Saydalia_Online.InterfaceRepositories;
+using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Models;
 using System.Reflection.Metadata.Ecma335;
 

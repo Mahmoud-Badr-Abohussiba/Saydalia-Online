@@ -1,4 +1,4 @@
-﻿namespace Saydalia_Online.InterfaceRepositories
+﻿namespace Saydalia_Online.Interfaces.InterfaceRepositories
 {
     public interface IGenaricRepository<T> where T : class
     {
