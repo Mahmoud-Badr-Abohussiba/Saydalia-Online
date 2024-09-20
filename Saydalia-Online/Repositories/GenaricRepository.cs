@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Saydalia_Online.InterfaceRepositories;
+using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Models;
 
 namespace Saydalia_Online.Repositories

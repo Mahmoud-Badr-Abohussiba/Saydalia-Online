@@ -1,6 +1,6 @@
 ﻿using Saydalia_Online.Models;
 
-namespace Saydalia_Online.InterfaceRepositories
+namespace Saydalia_Online.Interfaces.InterfaceRepositories
 {
     public interface IMedicineRepository : IGenaricRepository<Medicine>
     {

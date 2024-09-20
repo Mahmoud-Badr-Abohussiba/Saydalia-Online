@@ -3,11 +3,11 @@ using Saydalia_Online.Models;
 
 namespace Saydalia_Online.Repositories
 {
-    public class CategoryRepository : GenaricRepository<Category>, ICategoryRepository
+    public class OrderRepository : GenaricRepository<Order>, IOrderRepository
     {
         private readonly SaydaliaOnlineContext _dbContext;
 
-        public CategoryRepository(SaydaliaOnlineContext dbContext) : base(dbContext)
+        public OrderRepository(SaydaliaOnlineContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
