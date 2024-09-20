@@ -4,8 +4,10 @@ using Saydalia_Online.Data;
 using Saydalia_Online.Areas.Identity.Data;
 using Saydalia_Online.Models;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
-using Saydalia_Online.InterfaceRepositories;
 using Saydalia_Online.Repositories;
+using Saydalia_Online.Interfaces.InterfaceRepositories;
+using Saydalia_Online.Interfaces.InterfaceServices;
+using Saydalia_Online.Services;
 
 namespace Saydalia_Online
 {
@@ -30,6 +32,10 @@ namespace Saydalia_Online
 
             builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IOrderItemRepository, OrderItemRepositoryt>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 
             builder.Services.AddDefaultIdentity<Saydalia_Online_AuthUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<Saydalia_OnlineContext>();
 
