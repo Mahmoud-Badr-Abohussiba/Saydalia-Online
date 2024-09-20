@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Areas.Identity.Data;
+using System;
 
 namespace Saydalia_Online.Models
 {
@@ -18,6 +19,11 @@ namespace Saydalia_Online.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+            builder.Entity<Category>()
+                .HasIndex(c => c.Name)
+                .IsUnique();
+
             base.OnModelCreating(builder);
             // Customize your model if needed
         }
