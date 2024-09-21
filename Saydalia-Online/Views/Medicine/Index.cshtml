@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Medicine>
 @{
     ViewData["Title"] = "Store";
 }
@@ -17,64 +17,75 @@
    <div class="site-section">
       <div class="container">
 
-        <div class="row mb-3">
-          <div class="col-lg-6">
-            <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
-            <div id="slider-range" class="border-primary"></div>
-            <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />
-          </div>
-          <div class="col-lg-6">
-            <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Reference</h3>
-            <button type="button" class="btn btn-secondary btn-md dropdown-toggle px-4" id="dropdownMenuReference"
-              data-toggle="dropdown">Reference</button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-              <a class="dropdown-item" href="#">Relevance</a>
-              <a class="dropdown-item" href="#">Name, A to Z</a>
-              <a class="dropdown-item" href="#">Name, Z to A</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Price, low to high</a>
-              <a class="dropdown-item" href="#">Price, high to low</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-            @{
-                foreach (Medicine medicine in ViewBag.Medicines)
-                {
-                     <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                   
-                       <div class="m-3">
-                            <a asp-action="Details" asp-controller="Medicine" asp-route-Id="@medicine.Id">
-                                <img src="/files/images/@medicine.ImageName" class="card-img-top img-fluid mb-3" style="max-height:300px; max-width:250px;" alt="Chanca Piedra">
-                            </a>
-                       </div>
-                        <h3 class="text-dark">
-                            <a asp-action="Details" asp-controller="Medicine" asp-route-Id="@medicine.Id">@medicine.Name</a>
-                        </h3>
-                        <p class="price"><del>$95</del> &mdash; $@medicine.Price</p>
+        @if(Model.Any())
+        {
+            <div class="row mb-3">
+                <div class="col-lg-6">
+                    <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
+                    <div id="slider-range" class="border-primary"></div>
+                    <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Reference</h3>
+                    <button type="button" class="btn btn-secondary btn-md dropdown-toggle px-4" id="dropdownMenuReference"
+                            data-toggle="dropdown">
+                        Reference
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                        <a class="dropdown-item" href="#">Relevance</a>
+                        <a class="dropdown-item" href="#">Name, A to Z</a>
+                        <a class="dropdown-item" href="#">Name, Z to A</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Price, low to high</a>
+                        <a class="dropdown-item" href="#">Price, high to low</a>
                     </div>
-                }
-            }
-        </div>
-
-
-        <div class="row mt-5">
-          <div class="col-md-12 text-center">
-            <div class="site-block-27">
-              <ul>
-                <li><a href="#">&lt;</a></li>
-                <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&gt;</a></li>
-              </ul>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
+        }
+        @if(Model.Any())
+        {
+            <div class="row">
+                @{
+
+                    foreach (Medicine medicine in Model)
+                    {
+                        <div class="col-sm-6 col-lg-4 text-center item mb-4">
+
+                            <div class="m-3">
+                                <a asp-action="Details" asp-controller="Medicine" asp-route-Id="@medicine.Id">
+                                    <img src="/files/images/@medicine.ImageName" class="card-img-top img-fluid mb-3" style="max-height:300px; max-width:250px;" alt="Chanca Piedra">
+                                </a>
+                            </div>
+                            <h3 class="text-dark">
+                                <a asp-action="Details" asp-controller="Medicine" asp-route-Id="@medicine.Id">@medicine.Name</a>
+                            </h3>
+                            <p class="price"><del>$95</del> &mdash; $@medicine.Price</p>
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+
+        @if (Model.Any())
+        {
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                    <div class="site-block-27">
+                        <ul>
+                            <li><a href="#">&lt;</a></li>
+                            <li class="active"><span>1</span></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">&gt;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
     </div>
 
 

@@ -18,7 +18,7 @@
               <h2 class="sub-title">Effective Medicine, New Medicine Everyday</h2>
               <h1>Welcome To Saydalia Online</h1>
               <p>
-                <a asp-action="Index" asp-controller="Medicine" class="btn btn-primary px-5 py-3">Shop Now</a>
+                <a asp-action="Store" asp-controller="Home" class="btn btn-primary px-5 py-3">Shop Now</a>
               </p>
             </div>
           </div>
@@ -67,29 +67,35 @@
       </div>
     </div>
 
-    <div class="site-section">
+<div class="site-section">
       <div class="container">
         <div class="row">
           <div class="title-section text-center col-12">
             <h2 class="text-uppercase">Popular Products</h2>
           </div>
         </div>
+        @if (Model != null)
+        {
+            <div class="row">
+                @foreach (var medicine in Model)
+                {
+                    <div class="col-sm-6 col-lg-4 text-center item mb-4">
+                        <span class="tag">Sale</span>
+                        <a asp-action="Details" asp-controller="Medicine" asp-route-id="@medicine.Id">
+                            @* <img src="~/images/@medicine.ImageName" alt="@medicine.Name" /> *@
+                            <img src="~/files/images/@medicine.ImageName" class="card-img-top img-fluid mb-3" style="max-height:300px; max-width:250px;" alt="@medicine.Name">
 
-        <div class="row">
-            @foreach (var medicine in Model)
-            {
-                <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                    <span class="tag">Sale</span>
-                    <a asp-action="Details" asp-controller="Medicine" asp-route-id="@medicine.Id">
-                        @* <img src="~/images/@medicine.ImageName" alt="@medicine.Name" /> *@
-                        <img src="~/files/images/@medicine.ImageName" class="card-img-top img-fluid mb-3" style="max-height:300px; max-width:250px;" alt="@medicine.Name">
-
-                    </a>
-                    <h3 class="text-dark"><a asp-action="Details" asp-controller="Medicine" asp-route-id="@medicine.Id">@medicine.Name</a></h3>
-                    <p class="price"><del>$95.00</del> &mdash; $@medicine.Price</p>
-                </div>
-            }
-        </div>
+                        </a>
+                        <h3 class="text-dark"><a asp-action="Details" asp-controller="Medicine" asp-route-id="@medicine.Id">@medicine.Name</a></h3>
+                        <p class="price"><del>$95.00</del> &mdash; $@medicine.Price</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>Medicine not found!!</p>
+        }
 
 
 

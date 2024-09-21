@@ -247,7 +247,7 @@ namespace Saydalia_Online.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("categories");
+                    b.ToTable("categories", (string)null);
                 });
 
             modelBuilder.Entity("Saydalia_Online.Models.Medicine", b =>
@@ -288,7 +288,7 @@ namespace Saydalia_Online.Migrations
 
                     b.HasIndex("Cat_Id");
 
-                    b.ToTable("Medicines");
+                    b.ToTable("Medicines", (string)null);
                 });
 
             modelBuilder.Entity("Saydalia_Online.Models.Order", b =>
@@ -323,7 +323,7 @@ namespace Saydalia_Online.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Saydalia_Online.Models.OrderItem", b =>
@@ -358,7 +358,7 @@ namespace Saydalia_Online.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
