@@ -22,16 +22,6 @@ namespace Saydalia_Online.Controllers
             _categoryRepository=categoryRepository;
         }
 
-        //OnActionExecuting function is being called when any action in it's containing controller called
-        //public override async void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-        //    var catgs = await _categoryRepository.GetAll();
-        //    //var medicineCategories = GetMedicineCategories();
-
-        //    ViewBag.MedicineCategories = catgs;
-
-        //    base.OnActionExecuting(filterContext);
-        //}
         public async Task<IActionResult> Index()
         {
             var medicines = await _medicineRepository.GetAll();

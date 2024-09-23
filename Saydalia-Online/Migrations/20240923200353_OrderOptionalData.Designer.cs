@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Saydalia_Online.Models;
 
@@ -11,9 +12,11 @@ using Saydalia_Online.Models;
 namespace Saydalia_Online.Migrations
 {
     [DbContext(typeof(SaydaliaOnlineContext))]
-    partial class SaydaliaOnlineContextModelSnapshot : ModelSnapshot
+    [Migration("20240923200353_OrderOptionalData")]
+    partial class OrderOptionalData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

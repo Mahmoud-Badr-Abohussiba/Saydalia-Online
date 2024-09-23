@@ -18,6 +18,12 @@ namespace Saydalia_Online.Repositories
             return await _dbContext.SaveChangesAsync();
         }
 
+        public  int AddSync(T item)
+        {
+             _dbContext.Set<T>().Add(item);
+            return  _dbContext.SaveChanges();
+        }
+
         public async Task<int> Delete(T item)
         {
             _dbContext.Set<T>().Remove(item);
@@ -36,10 +42,17 @@ namespace Saydalia_Online.Repositories
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
+        public  T GetByIdSync(int id)
+        {
+            //return await _dbContext.Set<T>().AsNoTracking().FirstOrDefaultAsync(T => T.Id == id);
+
+            return _dbContext.Set<T>().Find(id);
+        }
+
         public async Task<int> Update(T item)
         {
             var existingEntity = _dbContext.ChangeTracker.Entries<T>()
-    .FirstOrDefault(e => e.Entity == item);
+                                                         .FirstOrDefault(e => e.Entity == item);
 
             if (existingEntity == null)
             {
@@ -52,6 +65,27 @@ namespace Saydalia_Online.Repositories
             }
 
             return await _dbContext.SaveChangesAsync();
+
+            //_dbContext.Set<T>().Update(item);
+            //return await _dbContext.SaveChangesAsync();
+        }
+
+        public int UpdateSync(T item)
+        {
+            var existingEntity = _dbContext.ChangeTracker.Entries<T>()
+                                                         .FirstOrDefault(e => e.Entity == item);
+
+            if (existingEntity == null)
+            {
+                _dbContext.Set<T>().Update(item);
+            }
+            else
+            {
+                // The entity is already being tracked, so update its values.
+                _dbContext.Entry(existingEntity.Entity).CurrentValues.SetValues(item);
+            }
+
+            return  _dbContext.SaveChanges();
 
             //_dbContext.Set<T>().Update(item);
             //return await _dbContext.SaveChangesAsync();
