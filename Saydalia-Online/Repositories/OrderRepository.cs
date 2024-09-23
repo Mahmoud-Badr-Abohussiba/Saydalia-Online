@@ -15,7 +15,7 @@ namespace Saydalia_Online.Repositories
 
         public  Order GetInCartOrder(string userId)
         {
-            var order =  _dbContext.Orders.Where(e => e.UserID == userId).FirstOrDefault();
+            var order =  _dbContext.Orders.Where(e => e.UserID == userId).Include(e => e.OrderItems).FirstOrDefault();
             if (order == null)
             {
                 var newOrder = new Order()
@@ -31,6 +31,7 @@ namespace Saydalia_Online.Repositories
                 // Now retrieve the newly created order from the DB
                 order =  _dbContext.Orders
                                         .Where(e => e.UserID == userId && e.Status == "In Cart")
+                                        .Include(e=>e.OrderItems)
                                         .FirstOrDefault();
             }
             return order;

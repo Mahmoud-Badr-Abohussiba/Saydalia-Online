@@ -37,7 +37,6 @@ namespace Saydalia_Online.Controllers
                 return Unauthorized();
             }
 
-            // no order is retruned, gpt fix this 
             var order = _orderService.CreateOrUpdateInCartOrder(userId, medicineId, quantity);
 
             // Redirect to the cart view or wherever appropriate

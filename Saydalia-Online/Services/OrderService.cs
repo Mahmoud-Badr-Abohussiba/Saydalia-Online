@@ -37,7 +37,6 @@ namespace Saydalia_Online.Services
                 //if(medicine.Stock >= quantity)
                 //{
                 
-            // execution stopped here
                     var inCartOrder =  _orderRepository.GetInCartOrder(userId);
                   
                     // check if medicine id is exist in order items 
@@ -47,10 +46,23 @@ namespace Saydalia_Online.Services
                     var orderItems = inCartOrder.OrderItems;
                     
 
-                    if(orderItems != null && orderItems.Count() > 0)
+                    if(orderItems == null)
+                    {
+                        var newOrderItem = new OrderItem()
+                        {
+                            Quantity = quantity,
+                            Price = quantity * medicine.Price,
+                            OrderID = inCartOrder.Id,
+                            MedicineID = medicineId,
+                        };
+
+                        _orderItemRepository.AddSync(newOrderItem);
+            
+                    }
+                    else
                     {
                         var orderItem = orderItems.Where(i => i.MedicineID == medicineId).FirstOrDefault();
-                        if(orderItem == null)
+                        if (orderItem == null)
                         {
                             var newOrderItem = new OrderItem()
                             {
@@ -69,19 +81,6 @@ namespace Saydalia_Online.Services
                             orderItem.UpdatedAt = DateTime.Now;
                             _orderItemRepository.UpdateSync(orderItem);
                         }
-
-                    }
-                    else
-                    {
-                        var newOrderItem = new OrderItem()
-                        {
-                            Quantity = quantity,
-                            Price = quantity * medicine.Price,
-                            OrderID = inCartOrder.Id,
-                            MedicineID = medicineId,
-                        };
-
-                        _orderItemRepository.AddSync(newOrderItem);
                     }
                    
 
