@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -19,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Saydalia_Online.Areas.Identity.Data;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace Saydalia_Online.Areas.Identity.Pages.Account
 {
@@ -30,13 +32,15 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Saydalia_Online_AuthUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private IHostingEnvironment _host;
 
         public RegisterModel(
             UserManager<Saydalia_Online_AuthUser> userManager,
             IUserStore<Saydalia_Online_AuthUser> userStore,
             SignInManager<Saydalia_Online_AuthUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IHostingEnvironment host)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +48,8 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _host = host;
+
         }
 
         /// <summary>
@@ -80,6 +86,19 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
+            [Display(Name = "User Name")]
+            public string name { get; set; }
+
+            [NotMapped]
+            public IFormFile clientfile { get; set; }
+
+
+            [Required]
+            [Phone]
+            [Display(Name = "phone number")]
+            public string phone { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -114,7 +133,29 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.EmailConfirmed= true;
+                user.EmailConfirmed = true;
+                user.name = Input.name;
+                user.PhoneNumber = Input.phone;
+                
+                user.clientfile=Input.clientfile;
+
+                string fileName = string.Empty;
+                if (Input.clientfile != null)
+                {
+                    string myUpload = Path.Combine(_host.WebRootPath, "images");
+                    fileName = Input.clientfile.FileName;
+                    string fullPath = Path.Combine(myUpload, fileName);
+
+                    // Save the file
+                    using (var fileStream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        await Input.clientfile.CopyToAsync(fileStream);
+                    }
+
+                    // Save the image path to the database
+                    user.ImagePath = fileName;
+                }
+
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -180,3 +221,4 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account
         }
     }
 }
+

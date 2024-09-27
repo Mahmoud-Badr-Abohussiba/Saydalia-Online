@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.Buffers.Text;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -31,6 +32,9 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Username { get; set; }
+        public string nameUser { get; set; }
+        public string pathImg {  get; set; }
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -59,14 +63,19 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
         }
 
         private async Task LoadAsync(Saydalia_Online_AuthUser user)
         {
+
+            
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
             Username = userName;
+            nameUser = user.name;
+            pathImg=user.ImagePath;
+            
 
             Input = new InputModel
             {
@@ -76,6 +85,7 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnGetAsync()
         {
+            
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -98,6 +108,7 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account.Manage
             {
                 await LoadAsync(user);
                 return Page();
+                
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);

@@ -4,12 +4,17 @@
 @inject SignInManager<Saydalia_Online_AuthUser> SignInManager
 @inject UserManager<Saydalia_Online_AuthUser> UserManager
 
+
 <ul class="navbar-nav flex-md-row">
 @if (SignInManager.IsSignedIn(User))
 {
  
     <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+        @* <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a> *@
+            <a id="manage" class="nav-link text-dark mr-2" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                Hello @UserManager.FindByIdAsync(UserManager.GetUserId(User)).Result.name
+           </a>
+
     </li>
     <li class="nav-item">
         <form id="logoutForm" class="form-inline mt-1" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
