@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Saydalia_Online.Models;
 
@@ -11,9 +12,11 @@ using Saydalia_Online.Models;
 namespace Saydalia_Online.Migrations
 {
     [DbContext(typeof(SaydaliaOnlineContext))]
-    partial class SaydaliaOnlineContextModelSnapshot : ModelSnapshot
+    [Migration("20240922111618_edit reg v1")]
+    partial class editregv1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,9 +181,6 @@ namespace Saydalia_Online.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -215,6 +215,10 @@ namespace Saydalia_Online.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -254,7 +258,7 @@ namespace Saydalia_Online.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("categories", (string)null);
+                    b.ToTable("categories");
                 });
 
             modelBuilder.Entity("Saydalia_Online.Models.Medicine", b =>
@@ -295,7 +299,7 @@ namespace Saydalia_Online.Migrations
 
                     b.HasIndex("Cat_Id");
 
-                    b.ToTable("Medicines", (string)null);
+                    b.ToTable("Medicines");
                 });
 
             modelBuilder.Entity("Saydalia_Online.Models.Order", b =>
@@ -330,7 +334,7 @@ namespace Saydalia_Online.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Saydalia_Online.Models.OrderItem", b =>
@@ -365,7 +369,7 @@ namespace Saydalia_Online.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

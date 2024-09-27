@@ -26,7 +26,8 @@ namespace Saydalia_Online.Repositories
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            return  _dbContext.Set<T>().ToList();
+
         }
 
         public async Task<T> GetById(int id)

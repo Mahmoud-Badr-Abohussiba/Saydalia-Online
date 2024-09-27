@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Saydalia_Online.Models;
 
@@ -11,9 +12,11 @@ using Saydalia_Online.Models;
 namespace Saydalia_Online.Migrations
 {
     [DbContext(typeof(SaydaliaOnlineContext))]
-    partial class SaydaliaOnlineContextModelSnapshot : ModelSnapshot
+    [Migration("20240922162453_add img ")]
+    partial class addimg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,7 +257,7 @@ namespace Saydalia_Online.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("categories", (string)null);
+                    b.ToTable("categories");
                 });
 
             modelBuilder.Entity("Saydalia_Online.Models.Medicine", b =>
@@ -295,7 +298,7 @@ namespace Saydalia_Online.Migrations
 
                     b.HasIndex("Cat_Id");
 
-                    b.ToTable("Medicines", (string)null);
+                    b.ToTable("Medicines");
                 });
 
             modelBuilder.Entity("Saydalia_Online.Models.Order", b =>
@@ -330,7 +333,7 @@ namespace Saydalia_Online.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Saydalia_Online.Models.OrderItem", b =>
@@ -365,7 +368,7 @@ namespace Saydalia_Online.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
