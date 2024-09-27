@@ -6,5 +6,6 @@ namespace Saydalia_Online.Interfaces.InterfaceServices
     {
         Task<Order> getDetailsById(int id);
         Order CreateOrUpdateInCartOrder(string userId, int medicineId,int quantity);
+        Task<Order> CreateOrUpdateInCartOrderAsync(string userId, int medicineId,int quantity);
     }
 }

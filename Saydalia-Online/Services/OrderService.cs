@@ -28,15 +28,14 @@ namespace Saydalia_Online.Services
 
         public  Order CreateOrUpdateInCartOrder(string userId, int medicineId,int quantity)
         {
-            //try
-            //{
+            try
+            {
                 var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
 
                 var medicine =  _medicineRepository.GetByIdSync(medicineId);
 
-                //if(medicine.Stock >= quantity)
-                //{
-                
+                if (medicine.Stock >= quantity)
+                {
                     var inCartOrder =  _orderRepository.GetInCartOrder(userId);
                   
                     // check if medicine id is exist in order items 
@@ -45,7 +44,6 @@ namespace Saydalia_Online.Services
 
                     var orderItems = inCartOrder.OrderItems;
                     
-
                     if(orderItems == null)
                     {
                         var newOrderItem = new OrderItem()
@@ -82,25 +80,92 @@ namespace Saydalia_Online.Services
                             _orderItemRepository.UpdateSync(orderItem);
                         }
                     }
-                   
 
                     return inCartOrder;
 
-                //}
-                //else
-                //{
-                //    throw new Exception("Quntity is not available");
-                //}
-            //}
-            //catch (Exception ex)
-            //{
-            //    // we should use logger
-            //    throw new Exception(ex.Message);
-            //}
-         
-           
+                }
+                else
+                {
+                    throw new Exception("Quntity is not available");
+                }
+            }
+            catch (Exception ex)
+            {
+                // we should use logger
+                throw new Exception(ex.Message);
+            }
 
+        }
 
+        public async Task<Order> CreateOrUpdateInCartOrderAsync(string userId, int medicineId, int quantity)
+        {
+
+            try
+            {
+                var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+
+                var medicine = await _medicineRepository.GetById(medicineId);
+
+                if (medicine.Stock >= quantity)
+                {
+                    var inCartOrder = await _orderRepository.GetInCartOrderAsync(userId);
+
+                    // check if medicine id is exist in order items 
+                    // if exsits update the quantity
+                    // if not exists create orderItem and assgin it to the product
+
+                    var orderItems = inCartOrder.OrderItems;
+
+                    if (orderItems == null)
+                    {
+                        var newOrderItem = new OrderItem()
+                        {
+                            Quantity = quantity,
+                            Price = quantity * medicine.Price,
+                            OrderID = inCartOrder.Id,
+                            MedicineID = medicineId,
+                        };
+
+                        await _orderItemRepository.Add(newOrderItem);
+
+                    }
+                    else
+                    {
+                        var orderItem =  orderItems.Where(i => i.MedicineID == medicineId).FirstOrDefault();
+                        if (orderItem == null)
+                        {
+                            var newOrderItem = new OrderItem()
+                            {
+                                Quantity = quantity,
+                                Price = quantity * medicine.Price,
+                                OrderID = inCartOrder.Id,
+                                MedicineID = medicineId,
+                            };
+
+                            await _orderItemRepository.Add(newOrderItem);
+                        }
+                        else
+                        {
+                            orderItem.Quantity = quantity;
+                            orderItem.Price = quantity * medicine.Price;
+                            orderItem.UpdatedAt = DateTime.Now;
+                            await  _orderItemRepository.Update(orderItem);
+                        }
+                    }
+
+                    return inCartOrder;
+
+                }
+                else
+                {
+                    throw new Exception("Quntity is not available");
+                }
+            }
+            catch (Exception ex)
+            {
+                // we should use logger
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

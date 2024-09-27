@@ -36,5 +36,29 @@ namespace Saydalia_Online.Repositories
             }
             return order;
         }
+
+        public async Task<Order> GetInCartOrderAsync(string userId)
+        {
+            var order = await _dbContext.Orders.Where(e => e.UserID == userId).Include(e => e.OrderItems).FirstOrDefaultAsync();
+            if (order == null)
+            {
+                var newOrder = new Order()
+                {
+                    Status = "In Cart",
+                    UserID = userId,
+                };
+
+                // Save the newly created order
+                await _dbContext.Orders.AddAsync(newOrder);
+                await _dbContext.SaveChangesAsync();  // Ensure the order is persisted in the database
+
+                // Now retrieve the newly created order from the DB
+                order = await _dbContext.Orders
+                                        .Where(e => e.UserID == userId && e.Status == "In Cart")
+                                        .Include(e => e.OrderItems)
+                                        .FirstOrDefaultAsync();
+            }
+            return order;
+        }
     }
 }

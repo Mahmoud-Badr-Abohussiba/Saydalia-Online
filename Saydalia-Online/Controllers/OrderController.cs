@@ -37,7 +37,7 @@ namespace Saydalia_Online.Controllers
                 return Unauthorized();
             }
 
-            var order = _orderService.CreateOrUpdateInCartOrder(userId, medicineId, quantity);
+            var order = await _orderService.CreateOrUpdateInCartOrderAsync(userId, medicineId, quantity);
 
             // Redirect to the cart view or wherever appropriate
             return RedirectToAction("Index", "Medicine");
