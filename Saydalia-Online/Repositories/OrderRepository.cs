@@ -15,7 +15,9 @@ namespace Saydalia_Online.Repositories
 
         public  Order GetInCartOrder(string userId)
         {
-            var order =  _dbContext.Orders.Where(e => e.UserID == userId).Include(e => e.OrderItems).FirstOrDefault();
+            var order =  _dbContext.Orders.Where(e => e.UserID == userId && e.Status == "In Cart")
+                .Include(e => e.OrderItems)
+                .FirstOrDefault();
             if (order == null)
             {
                 var newOrder = new Order()
@@ -37,9 +39,12 @@ namespace Saydalia_Online.Repositories
             return order;
         }
 
-        public async Task<Order> GetInCartOrderAsync(string userId)
+        public async Task<Order> GetInCartOrderAsync(string userId )
         {
-            var order = await _dbContext.Orders.Where(e => e.UserID == userId).Include(e => e.OrderItems).FirstOrDefaultAsync();
+            var order = await _dbContext.Orders.Where(e => e.UserID == userId && e.Status == "In Cart")
+                .Include(e => e.OrderItems)
+                .ThenInclude(oi=>oi.Medicine)
+                .FirstOrDefaultAsync(); // gpt handle it so that the orederItems returned with related medicines
             if (order == null)
             {
                 var newOrder = new Order()
@@ -60,5 +65,7 @@ namespace Saydalia_Online.Repositories
             }
             return order;
         }
+
+     
     }
 }

@@ -6,5 +6,6 @@ namespace Saydalia_Online.Interfaces.InterfaceRepositories
     {
         Order GetInCartOrder(string userId);
         Task<Order> GetInCartOrderAsync(string userId);
+
     }
 }

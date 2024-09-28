@@ -26,75 +26,9 @@ namespace Saydalia_Online.Services
             return  await _orderRepository.GetById(id);
         }
 
-        public  Order CreateOrUpdateInCartOrder(string userId, int medicineId,int quantity)
+        public async Task<Order> GetInCartOrderAsync(string userId)
         {
-            try
-            {
-                var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
-
-                var medicine =  _medicineRepository.GetByIdSync(medicineId);
-
-                if (medicine.Stock >= quantity)
-                {
-                    var inCartOrder =  _orderRepository.GetInCartOrder(userId);
-                  
-                    // check if medicine id is exist in order items 
-                    // if exsits update the quantity
-                    // if not exists create orderItem and assgin it to the product
-
-                    var orderItems = inCartOrder.OrderItems;
-                    
-                    if(orderItems == null)
-                    {
-                        var newOrderItem = new OrderItem()
-                        {
-                            Quantity = quantity,
-                            Price = quantity * medicine.Price,
-                            OrderID = inCartOrder.Id,
-                            MedicineID = medicineId,
-                        };
-
-                        _orderItemRepository.AddSync(newOrderItem);
-            
-                    }
-                    else
-                    {
-                        var orderItem = orderItems.Where(i => i.MedicineID == medicineId).FirstOrDefault();
-                        if (orderItem == null)
-                        {
-                            var newOrderItem = new OrderItem()
-                            {
-                                Quantity = quantity,
-                                Price = quantity * medicine.Price,
-                                OrderID = inCartOrder.Id,
-                                MedicineID = medicineId,
-                            };
-
-                            _orderItemRepository.AddSync(newOrderItem);
-                        }
-                        else
-                        {
-                            orderItem.Quantity = quantity;
-                            orderItem.Price = quantity * medicine.Price;
-                            orderItem.UpdatedAt = DateTime.Now;
-                            _orderItemRepository.UpdateSync(orderItem);
-                        }
-                    }
-
-                    return inCartOrder;
-
-                }
-                else
-                {
-                    throw new Exception("Quntity is not available");
-                }
-            }
-            catch (Exception ex)
-            {
-                // we should use logger
-                throw new Exception(ex.Message);
-            }
-
+            return await _orderRepository.GetInCartOrderAsync(userId);
         }
 
         public async Task<Order> CreateOrUpdateInCartOrderAsync(string userId, int medicineId, int quantity)
@@ -102,7 +36,6 @@ namespace Saydalia_Online.Services
 
             try
             {
-                var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
 
                 var medicine = await _medicineRepository.GetById(medicineId);
 
@@ -153,6 +86,10 @@ namespace Saydalia_Online.Services
                         }
                     }
 
+                    medicine.Stock -= quantity;
+                    await _medicineRepository.Update(medicine);
+
+                    inCartOrder = this.UpdateOrderTotalPrice(inCartOrder);
                     return inCartOrder;
 
                 }
@@ -167,5 +104,32 @@ namespace Saydalia_Online.Services
                 throw new Exception(ex.Message);
             }
         }
+    
+        public Order UpdateOrderTotalPrice(Order order)
+        {
+            var total = 0;
+            if(order.OrderItems.Count > 0)
+            {
+                foreach (var item in order.OrderItems)
+                {
+                    total += (int)item.Price;
+                }
+            }
+            order.TotalAmount = total;
+            _dbContext.SaveChanges();
+            return order;
+        }
+
+        public async Task<Order> ConfrimAsync(string userId,string Address, string Phone)
+        {
+            var inCartOrder = await _orderRepository.GetInCartOrderAsync(userId);
+            inCartOrder.Address = Address;
+            inCartOrder.Phone = Phone;
+            inCartOrder.Status = "Pending";
+            inCartOrder.OrderDate = DateTime.Now;
+            await _orderRepository.Update(inCartOrder);
+            return inCartOrder;
+        }
     }
+
 }

@@ -28,7 +28,6 @@ namespace Saydalia_Online.Controllers
             ViewBag.Medicines = medicines;
             return View(medicines);
         }
-
         public async Task<IActionResult> Details(int id) 
         {
             var medicine = await _medicineRepository.Details(id);

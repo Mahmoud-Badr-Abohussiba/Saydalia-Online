@@ -37,10 +37,11 @@ namespace Saydalia_Online.Controllers
 
 		public async Task<IActionResult> Details(int id)
         {
-            var cat = await _categoryRepository.GetById(id);
+            var cat = await _categoryRepository.GetByIdWithProducts(id);
                                 
             return View(cat);
         }
+
         [HttpGet]
         public IActionResult Create()
         {
