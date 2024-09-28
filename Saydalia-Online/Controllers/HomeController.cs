@@ -52,6 +52,12 @@ namespace Saydalia_Online.Controllers
             return View(medicines);
         }
 
+        public async Task<IActionResult> StoreInJSON()
+        {
+            var medicines = await _medicineRepository.GetAll();
+            return Json(medicines);
+        }
+        
         public IActionResult About()
         {
             return View();
