@@ -25,7 +25,10 @@ namespace Saydalia_Online.Services
         {
             return  await _orderRepository.GetById(id);
         }
-
+        public async Task<Order> getDetailsByIdWithItems(int id)
+        {
+            return await _orderRepository.getDetailsByIdWithItems(id);
+        }
         public async Task<Order> GetInCartOrderAsync(string userId)
         {
             return await _orderRepository.GetInCartOrderAsync(userId);
@@ -129,6 +132,22 @@ namespace Saydalia_Online.Services
             inCartOrder.OrderDate = DateTime.Now;
             await _orderRepository.Update(inCartOrder);
             return inCartOrder;
+        }
+
+        public async Task<IEnumerable<Order>> getOrdersAsync(string userId)
+        {
+            return await _orderRepository.getOrdersAsync(userId);
+        }
+
+        public async Task<IEnumerable<Order>> getOrdersAsync()
+        {
+            return await _orderRepository.getOrdersAsync();   
+        }
+
+        public async Task<int> UpdateOrder(Order order)
+        {
+            var ord = await _orderRepository.Update(order);
+            return ord;
         }
     }
 
