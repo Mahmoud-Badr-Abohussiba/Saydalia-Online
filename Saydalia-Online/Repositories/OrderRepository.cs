@@ -66,6 +66,32 @@ namespace Saydalia_Online.Repositories
             return order;
         }
 
-     
+        public async Task<IEnumerable<Order>> getOrdersAsync(string userId)
+        {
+            var orders = await _dbContext.Orders.Where(e => e.UserID == userId)
+               .OrderByDescending(e=>e.CreatedAt)
+               .Include(e => e.OrderItems)
+               .ThenInclude(oi => oi.Medicine)
+               .ToListAsync();
+            return orders;
+        }
+
+        public async Task<IEnumerable<Order>> getOrdersAsync()
+        {
+            var orders = await _dbContext.Orders.OrderByDescending(e => e.CreatedAt)
+               .Include(e => e.OrderItems)
+               .ThenInclude(oi => oi.Medicine)
+               .ToListAsync();
+            return orders;
+        }
+
+        public async Task<Order> getDetailsByIdWithItems(int id)
+        {
+            var order = await _dbContext.Orders.Where(e => e.Id == id)
+                 .Include(e => e.OrderItems)
+                 .ThenInclude(oi => oi.Medicine)
+                 .FirstOrDefaultAsync();
+            return order;
+        }
     }
 }

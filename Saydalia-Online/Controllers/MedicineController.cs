@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Helpers;
@@ -35,6 +36,7 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Pharmacist, Admin")]
         public async Task<IActionResult> Create()
         {
             ViewBag.Categories = await _categoryRepository.GetAll();
@@ -42,6 +44,7 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Pharmacist, Admin")]
         public async Task<IActionResult> Create(Medicine medicin ,  IFormFile image)
         {
             ViewBag.Categories = await _categoryRepository.GetAll();
@@ -59,6 +62,7 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Pharmacist, Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             var medicine = await _medicineRepository.GetById(id.Value);
@@ -69,7 +73,9 @@ namespace Saydalia_Online.Controllers
             ViewBag.Categories = await _categoryRepository.GetAll();
             return View(medicine);
         }
+
         [HttpPost]
+        [Authorize(Roles = "Pharmacist, Admin")]
         public async Task<IActionResult> Edit([FromRoute] int id, Medicine model, IFormFile Image)
         {
             ViewBag.Categories = await _categoryRepository.GetAll();

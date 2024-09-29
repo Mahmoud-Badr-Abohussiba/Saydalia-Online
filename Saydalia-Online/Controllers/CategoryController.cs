@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Saydalia_Online.Helpers;
@@ -43,12 +44,14 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Pharmacist, Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Pharmacist, Admin")]
         public async Task<IActionResult> Create(Category model)
         {
 
@@ -68,12 +71,15 @@ namespace Saydalia_Online.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int ? id)
+        [Authorize(Roles = "Pharmacist, Admin")]
+        public async Task<IActionResult> Edit(int ? id)
         {
-            var category = _categoryRepository.GetById(id.Value);
+            var category = await _categoryRepository.GetById(id.Value);
             return View(category);
         }
+
         [HttpPost]
+        [Authorize(Roles = "Pharmacist, Admin")]
         public async Task<IActionResult> Edit([FromRoute]int ? id, Category model)
         {
             if (id != model.Id)

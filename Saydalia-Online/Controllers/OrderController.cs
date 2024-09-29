@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Saydalia_Online.Interfaces.InterfaceServices;
 using Saydalia_Online.Models;
 using System.Security.Claims;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace Saydalia_Online.Controllers
 {
@@ -16,16 +17,59 @@ namespace Saydalia_Online.Controllers
             _orderService = orderService; 
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            if(User.IsInRole("Pharmacist") || User.IsInRole("Admin"))
+            {
+                var orders = await _orderService.getOrdersAsync();
+                return View(orders);
+            }
+            else
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var orders = await _orderService.getOrdersAsync(userId);
+                return View(orders);
+            }
+           
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var order = await _orderService.getDetailsById(id);
+            var order = await _orderService.getDetailsByIdWithItems(id);
             return View(order);
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var order = await _orderService.getDetailsByIdWithItems(id);
+            return View(order);
+        }
+
+        public async Task<IActionResult> UpdateStatus(int id,string Status)
+        {
+            var order = await _orderService.getDetailsByIdWithItems(id);
+
+            var validStatusesForPharmacist = new List<string> { "InTransit", "Canceled", "Rejected", "Delivered" };
+
+            if (User.IsInRole("Pharmacist") || User.IsInRole("Admin"))
+            {
+                if (!validStatusesForPharmacist.Contains(Status))
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid status");
+                    return View(order); 
+                }
+            }
+            else
+            {
+                Status = "Canceled";
+            }
+
+            order.Status = Status;
+            await _orderService.UpdateOrder(order);
+
+            return RedirectToAction("Index");   
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> AddToCart(int medicineId,int quantity)

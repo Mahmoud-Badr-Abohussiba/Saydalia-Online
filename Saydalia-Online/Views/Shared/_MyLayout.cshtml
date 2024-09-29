@@ -46,7 +46,7 @@
 
                                 <li class="active"><a href="/">Home</a></li>
 
-                                <li><a asp-action="Store" asp-controller="Home">Store</a></li>
+                            <li><a asp-action="Index" asp-controller="Medicine">Store</a></li>
 
                                 @********************navbar*********************************@
 
@@ -81,7 +81,12 @@
                                 <li><a asp-action="About" asp-controller="Home">About</a></li>
 
                                 <li><a asp-action="Contact" asp-controller="Home">Contact</a></li>
-                            </ul>
+                            @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
+                            {
+                                <li><a asp-action="Index" asp-controller="Category">Categories</a></li>
+                                <li><a asp-action="Index" asp-controller="Order">Orders</a></li>
+                            }
+                        </ul>
                         </nav>
                     </div>
                     <div class="icons">
