@@ -63,7 +63,10 @@
                 </td> *@
                     <td>
                         <a asp-action="Details" asp-controller="Order" asp-route-Id="@item.Id" class="btn btn-primary">Details</a>
-                        <a asp-action="Edit" asp-controller="Order" asp-route-Id="@item.Id" class="btn btn-primary">Edit</a>
+                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
+                        {
+                            <a asp-action="Edit" asp-controller="Order" asp-route-Id="@item.Id" class="btn btn-primary">Edit</a>
+                        }
                     </td>
                 </tr>
             }

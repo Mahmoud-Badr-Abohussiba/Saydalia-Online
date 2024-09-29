@@ -83,11 +83,11 @@
                                 <div class="row mb-5">
                                     <div class="col-md-12">
                                         <label asp-for="Address" class="form-label mt-2">Address</label>
-                                        <input type="text" asp-for="Address" class="form-control form-control-lg" placeholder="Enter address" />
+                                        <input required type="text" asp-for="Address" class="form-control form-control-lg" placeholder="Enter address" />
                                      </div>
                                     <div class="col-md-12">
                                         <label asp-for="Phone" class="form-label mt-2">Phone</label>
-                                        <input type="text" asp-for="Phone" class="form-control form-control-lg" placeholder="Enter your phone number"
+                                        <input required type="text" asp-for="Phone" class="form-control form-control-lg" placeholder="Enter your phone number"
                                                pattern="^[+]?\d{0,13}$" title="Please enter a valid phone number" />
                                     </div>
                                 </div>
