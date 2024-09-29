@@ -1,6 +1,6 @@
 ﻿@model Order
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Cart";
 
 }
 
@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12 mb-0">
                 <a href="/">Home</a> <span class="mx-2 mb-0">/</span>
-                <strong class="text-black">Details</strong>
+                <strong class="text-black">Cart</strong>
             </div>
         </div>
     </div>
@@ -55,58 +55,77 @@
                     </div>
                 </div>
             </div>
+
         }
-        <div class="row">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12 text-left border-bottom">
-                                <h3 class="text-black h4 text-uppercase">Deleivring Information</h3>
-                            </div>
-                        </div>
-
-                        <div class="row mb-5">
-                            <div class="col-md-12">
-                                <label class="form-label mt-2">Address</label>
-                                <p class="form-control form-control-lg">@Model.Address</p>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label mt-2">Phone</label>
-                                <p class="form-control form-control-lg">@Model.Phone</p>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label mt-2">Status</label>
-                                <p class="form-control form-control-lg">@Model.Status</p>
+        <form asp-action="UpdateStatus" asp-controller="Order" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12 text-left border-bottom">
+                                    <h3 class="text-black h4 text-uppercase">Deleivring Information</h3>
+                                </div>
                             </div>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <label class="form-label mt-2">Address</label>
+                                    <p class="form-control form-control-lg">@Model.Address</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label mt-2">Phone</label>
+                                    <p class="form-control form-control-lg">@Model.Phone</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label mt-2">Status</label>
+                                    <p class="form-control form-control-lg">@Model.Status</p>
+                                </div>
 
-            <div class="col-md-6  pl-5">
-                <div class="row justify-content-end">
-                    <div class="col-md-7">
-                        <div class="row">
-                            <div class="col-md-12 text-left border-bottom mb-5">
-                                <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
-                            </div>
-                        </div>
-
-                        <div class="row mb-5">
-                            <div class="col-md-6">
-                                <span class="text-black">Total</span>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <strong class="text-black">$ @Model.TotalAmount</strong>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
+                <div class="col-md-6  pl-5">
+                    <div class="row justify-content-end">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-12 text-left border-bottom mb-5">
+                                    <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                                </div>
+                            </div>
+
+                            <div class="row mb-5">
+                                <div class="col-md-6">
+                                    <span class="text-black">Total</span>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <strong class="text-black">$ @Model.TotalAmount</strong>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input asp-for="Id" hidden />
+                                    <select asp-for="Status" class="form-control form-control-lg">
+                                        <option value="InTransit">In Transit</option>
+                                        <option value="Canceled">Canceled</option>
+                                        <option value="Rejected">Rejected</option>
+                                        <option value="Delivered">Delivered</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">Update Status</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
 
     </div>
 </div>
