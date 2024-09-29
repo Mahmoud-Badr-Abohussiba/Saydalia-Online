@@ -22,6 +22,7 @@ namespace Saydalia_Online
 
             //builder.Services.AddDbContextPool<SaydaliaOnlineContext>(options => options.UseSqlServer(connectionString));
 
+            builder.Services.AddScoped<SaydaliaOnlineContext>();
             builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();

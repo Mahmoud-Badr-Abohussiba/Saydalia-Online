@@ -1,4 +1,5 @@
-﻿using Saydalia_Online.Interfaces.InterfaceRepositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Models;
 
 namespace Saydalia_Online.Repositories
@@ -11,5 +12,60 @@ namespace Saydalia_Online.Repositories
         {
             _dbContext = dbContext;
         }
+
+        public  Order GetInCartOrder(string userId)
+        {
+            var order =  _dbContext.Orders.Where(e => e.UserID == userId && e.Status == "In Cart")
+                .Include(e => e.OrderItems)
+                .FirstOrDefault();
+            if (order == null)
+            {
+                var newOrder = new Order()
+                {
+                    Status = "In Cart",
+                    UserID = userId,
+                };
+
+                // Save the newly created order
+                 _dbContext.Orders.Add(newOrder);
+                 _dbContext.SaveChanges();  // Ensure the order is persisted in the database
+
+                // Now retrieve the newly created order from the DB
+                order =  _dbContext.Orders
+                                        .Where(e => e.UserID == userId && e.Status == "In Cart")
+                                        .Include(e=>e.OrderItems)
+                                        .FirstOrDefault();
+            }
+            return order;
+        }
+
+        public async Task<Order> GetInCartOrderAsync(string userId )
+        {
+            var order = await _dbContext.Orders.Where(e => e.UserID == userId && e.Status == "In Cart")
+                .Include(e => e.OrderItems)
+                .ThenInclude(oi=>oi.Medicine)
+                .FirstOrDefaultAsync(); // gpt handle it so that the orederItems returned with related medicines
+            if (order == null)
+            {
+                var newOrder = new Order()
+                {
+                    Status = "In Cart",
+                    UserID = userId,
+                };
+
+                // Save the newly created order
+                await _dbContext.Orders.AddAsync(newOrder);
+                await _dbContext.SaveChangesAsync();  // Ensure the order is persisted in the database
+
+                // Now retrieve the newly created order from the DB
+                order = await _dbContext.Orders
+                                        .Where(e => e.UserID == userId && e.Status == "In Cart")
+                                        .Include(e => e.OrderItems)
+                                        .FirstOrDefaultAsync();
+            }
+            return order;
+        }
+
+     
     }
 }

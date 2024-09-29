@@ -18,6 +18,7 @@ namespace Saydalia_Online.Repositories
             return await _dbContext.SaveChangesAsync();
         }
 
+      
         public async Task<int> Delete(T item)
         {
             _dbContext.Set<T>().Remove(item);
@@ -32,15 +33,14 @@ namespace Saydalia_Online.Repositories
 
         public async Task<T> GetById(int id)
         {
-            //return await _dbContext.Set<T>().AsNoTracking().FirstOrDefaultAsync(T => T.Id == id);
-
             return await _dbContext.Set<T>().FindAsync(id);
         }
+
 
         public async Task<int> Update(T item)
         {
             var existingEntity = _dbContext.ChangeTracker.Entries<T>()
-    .FirstOrDefault(e => e.Entity == item);
+                                                         .FirstOrDefault(e => e.Entity == item);
 
             if (existingEntity == null)
             {
@@ -54,8 +54,8 @@ namespace Saydalia_Online.Repositories
 
             return await _dbContext.SaveChangesAsync();
 
-            //_dbContext.Set<T>().Update(item);
-            //return await _dbContext.SaveChangesAsync();
         }
+
+       
     }
 }

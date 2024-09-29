@@ -18,71 +18,36 @@
         <div class="row align-items-center">
             <div class="col-md-5 mr-auto">
                 <div class="border text-center">
-                  @*  <img src="/images/@Model.ImageName" alt="Image" class="img-fluid p-5"> *@
                     <img src="~/files/images/@Model.ImageName" class="card-img-top img-fluid mb-3" style="max-height:300px; max-width:250px;" alt="@Model.Name">
-
                 </div>
             </div>
             <div class="col-md-6 d-flex flex-column justify-content-center">
                 <h2 class="text-black">@Model.Name</h2>
-                <p>
-                    @Model.Description
-                </p>
+                <p>@Model.Description</p>
+                <p>Left in Stock: @Model.Stock</p>
+                <p>Category: @Model.Categories.Name</p>
+                <p><del>$95.00</del> <strong class="text-primary h4">@Model.Price</strong></p>
 
                 <p>
-                    Left in Stock: @Model.Stock
+                    @if (Model.Stock > 0)
+                    {
+                        <form method="post" asp-action="AddToCart" asp-controller="Order" enctype="multipart/form-data">
+                            <div asp-validation-summary="All"></div>
+                            <div class="mb-5 d-flex align-items-center">
+                                <input type="number" class="form-control text-center" value="1" placeholder=""
+                                       aria-label="Example text with button addon" aria-describedby="button-addon1"
+                                       min="1" max="@Model.Stock" name="quantity" required style="max-width: 100px;">
+                                <input type="hidden" name="medicineId" value="@Model.Id" />
+                                <input type="submit" value="Add To Cart" class="btn btn-primary ml-2" />
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <span>Not Available</span>
+                    }
                 </p>
-
-                <p>
-                    Category: @Model.Categories.Name
-                </p>
-
-                <p><del>$95.00</del>  <strong class="text-primary h4">@Model.Price</strong></p>
-
-                <div class="mb-5">
-                    <div class="input-group mb-3" style="max-width: 220px;">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                        </div>
-                        <input type="text" class="form-control text-center" value="1" placeholder=""
-                               aria-label="Example text with button addon" aria-describedby="button-addon1">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                        </div>
-                    </div>
-
-                </div>
-                <p><a asp-action="Cart" asp-controller="Home" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</a></p>
             </div>
         </div>
     </div>
 </div>
-
-@*********************************************************************************************************@
-<div class="site-section bg-secondary bg-image" style="background-image: url('/images/bg_2.jpg');">
-    <div class="container">
-        <div class="row align-items-stretch">
-            <div class="col-lg-6 mb-5 mb-lg-0">
-                <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/images/bg_1.jpg');">
-                    <div class="banner-1-inner align-self-center">
-                        <h2>Pharma Products</h2>
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
-                        </p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-6 mb-5 mb-lg-0">
-                <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/images/bg_2.jpg');">
-                    <div class="banner-1-inner ml-auto  align-self-center">
-                        <h2>Rated by Experts</h2>
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
-                        </p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
