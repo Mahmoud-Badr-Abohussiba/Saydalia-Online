@@ -30,6 +30,7 @@ namespace Saydalia_Online
             builder.Services.AddScoped<IOrderItemRepository, OrderItemRepositoryt>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+            builder.Services.AddScoped<IPayService, PaypalService>();
             #endregion
 
             builder.Services.AddDefaultIdentity<Saydalia_Online_AuthUser>(options =>
