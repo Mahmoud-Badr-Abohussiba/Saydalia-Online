@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/css/aos.css">
 
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=@(ViewBag.ClientID)&currency=USD"></script>
 </head>
 <body>
     <div class="site-wrap">
@@ -86,6 +87,7 @@
                                 <li><a asp-action="Index" asp-controller="Category">Categories</a></li>
                             }
                             <li><a asp-action="Index" asp-controller="Order">Orders</a></li>
+                            <li><a asp-action="Index" asp-controller="CheckOut">Checkout</a></li>
 
                         </ul>
                         </nav>
