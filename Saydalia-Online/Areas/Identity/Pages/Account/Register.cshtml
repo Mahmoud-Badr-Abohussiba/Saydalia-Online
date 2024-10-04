@@ -3,12 +3,19 @@
 @{
     ViewData["Title"] = "Register";
 }
+
+
 <div class="container">
     <div class="row justify-content-center">
     <div class="col-md-4">
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
                 <h1 class="text-info mb-2 w-100 text-center mt-4 " style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif"> Register </h1>
-
+                @if (TempData["StatusMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["StatusMessage"]
+                    </div>
+                }
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
                 <div class="form-floating mb-3 mt-4 w-100 d-flex justify-content-center">
@@ -17,7 +24,7 @@
 
                 <div class="form-floating mb-3 mt-4">
                     <label asp-for="Input.name">User Name</label>
-                    <input asp-for="Input.name" class="form-control" aria-required="true" placeholder="enter your name" />
+                    <input asp-for="Input.name" type="text" class="form-control" aria-required="true" placeholder="enter your name" />
                     <span asp-validation-for="Input.name" class="text-danger"></span>
                 </div>
 

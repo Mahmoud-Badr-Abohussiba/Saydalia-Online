@@ -18,7 +18,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Shared;
 using Saydalia_Online.Areas.Identity.Data;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
@@ -64,6 +66,11 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string ReturnUrl { get; set; }
+
+
+        [TempData]
+        public string StatusMessage { get; set; }
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -132,10 +139,24 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+
+                var existingUser = await _userManager.Users
+               .FirstOrDefaultAsync(u => u.PhoneNumber == Input.phone);
+
+                if (existingUser != null)
+                {
+                    // Phone number is already registered
+                    TempData["StatusMessage"] = "The phone number is already taken.";
+                    return Page();
+                }
                 var user = CreateUser();
                 user.EmailConfirmed = true;
                 user.name = Input.name;
+
+
+
                 user.PhoneNumber = Input.phone;
+
                 
                 user.clientfile=Input.clientfile;
 
