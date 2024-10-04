@@ -43,7 +43,7 @@
             <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
                 <div class="banner-wrap h-100">
                     <a href="#" class="h-100">
-                        <h5>Season <br> Sale 50% Off</h5>
+                        @*<h5>Season <br> Sale 50% Off</h5>*@
                         <p>
                             Amet sit amet dolor
                             <strong>Lorem, ipsum dolor sit amet consectetur adipisicing.</strong>
@@ -80,14 +80,14 @@
                 @foreach (var medicine in Model)
                 {
                     <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                        <span class="tag">Sale</span>
+                       @*@ <span class="tag">Sale</span>*@
                         <a asp-action="Details" asp-controller="Medicine" asp-route-id="@medicine.Id">
                             @* <img src="~/images/@medicine.ImageName" alt="@medicine.Name" /> *@
                             <img src="~/files/images/@medicine.ImageName" class="card-img-top img-fluid mb-3" style="max-height:300px; max-width:250px;" alt="@medicine.Name">
 
                         </a>
                         <h3 class="text-dark"><a asp-action="Details" asp-controller="Medicine" asp-route-id="@medicine.Id">@medicine.Name</a></h3>
-                        <p class="price"><del>$95.00</del> &mdash; $@medicine.Price</p>
+                        <p class="price">  $@medicine.Price</p>
                     </div>
                 }
             </div>
