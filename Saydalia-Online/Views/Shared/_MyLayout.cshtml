@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/css/aos.css">
 
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=@(ViewBag.ClientID)&currency=USD"></script>
 </head>
 <body>
     <div class="site-wrap">
@@ -68,15 +69,11 @@
                                 <li><a asp-action="About" asp-controller="Home">About</a></li>
 
                                 <li><a asp-action="Contact" asp-controller="Home">Contact</a></li>
-                            @if (User.Identity.IsAuthenticated)
+                            @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
                             {
-                                <li><a asp-action="Index" asp-controller="Order">Orders</a></li>
-                                @if (User.IsInRole("Pharmacist") || User.IsInRole("Admin"))
-                                {
-                                    <li><a asp-action="Index" asp-controller="Category">Categories</a></li>
-                                }
+                                <li><a asp-action="Index" asp-controller="Category">Categories</a></li>
                             }
-
+                            <li><a asp-action="Index" asp-controller="Order">Orders</a></li>
                         </ul>
                         </nav>
                     </div>

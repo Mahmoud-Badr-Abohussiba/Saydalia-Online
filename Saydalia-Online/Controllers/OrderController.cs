@@ -110,5 +110,12 @@ namespace Saydalia_Online.Controllers
         }
 
 
+        public async Task<IActionResult> CompleteOrder()
+        {
+
+            return View("OrderCompleted");
+        }
+
+
     }
 }
