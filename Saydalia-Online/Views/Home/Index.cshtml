@@ -3,13 +3,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-@* <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
- *@
-
-
 <div class="site-blocks-cover" style="background-image: url('/images/hero_1.jpg');">
     <div class="container">
         <div class="row">
@@ -97,12 +90,9 @@
             <p>Medicine not found!!</p>
         }
 
-
-
-
         <div class="row mt-5">
             <div class="col-12 text-center">
-                <a asp-action="Store" asp-controller="Home" class="btn btn-primary px-4 py-3">View All Products</a>
+                <a asp-action="Index" asp-controller="Medicine" class="btn btn-primary px-4 py-3">View All Products</a>
             </div>
         </div>
     </div>

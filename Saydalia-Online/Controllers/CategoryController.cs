@@ -28,10 +28,10 @@ namespace Saydalia_Online.Controllers
 
             base.OnActionExecuting(filterContext);
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int?page)
         {
 
-			var categoryid = await _categoryRepository.GetAll();
+			var categoryid = await _categoryRepository.GetAllPaginated(page??1);
 
 			return View(categoryid);
 		}

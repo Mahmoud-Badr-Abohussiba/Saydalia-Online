@@ -17,17 +17,17 @@ namespace Saydalia_Online.Controllers
             _orderService = orderService; 
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             if(User.IsInRole("Pharmacist") || User.IsInRole("Admin"))
             {
-                var orders = await _orderService.getOrdersAsync();
+                var orders = await _orderService.getOrdersAsync(page??1);
                 return View(orders);
             }
             else
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var orders = await _orderService.getOrdersAsync(userId);
+                var orders = await _orderService.getOrdersAsync(userId,page??1);
                 return View(orders);
             }
            

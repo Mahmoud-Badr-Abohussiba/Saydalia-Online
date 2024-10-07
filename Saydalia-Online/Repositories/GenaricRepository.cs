@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PagedList;
 using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Models;
 
@@ -28,6 +29,12 @@ namespace Saydalia_Online.Repositories
         public async Task<IEnumerable<T>> GetAll()
         {
             return  _dbContext.Set<T>().ToList();
+
+        }
+
+        public async Task<IPagedList<T>> GetAllPaginated(int page)
+        {
+            return _dbContext.Set<T>().ToPagedList(page, 12);
 
         }
 

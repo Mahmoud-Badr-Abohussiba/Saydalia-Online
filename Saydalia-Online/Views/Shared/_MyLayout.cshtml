@@ -58,19 +58,6 @@
                                             List<Category> categories = ViewBag.MedicineCategories;
                                             foreach (var category in categories)
                                             {
-                                               @*if (category.SubCategories != null && category.SubCategories.Any())
-                                                {
-                                                <li class="has-children">
-                                                <a href="#">@category.Name</a>
-                                                <ul class="dropdown">
-                                                @foreach (var subCategory in category.SubCategories)
-                                                {
-                                                <li><a href="#">@subCategory.Name</a></li>
-                                                }
-                                                </ul>
-                                                </li>
-                                                } *@
-
                                                 <li><a asp-action="Details" asp-controller="Category" asp-route-id="@category.Id">@category.Name</a></li>
 
                                             }
@@ -81,11 +68,14 @@
                                 <li><a asp-action="About" asp-controller="Home">About</a></li>
 
                                 <li><a asp-action="Contact" asp-controller="Home">Contact</a></li>
-                            @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
+                            @if (User.Identity.IsAuthenticated)
                             {
-                                <li><a asp-action="Index" asp-controller="Category">Categories</a></li>
+                                <li><a asp-action="Index" asp-controller="Order">Orders</a></li>
+                                @if (User.IsInRole("Pharmacist") || User.IsInRole("Admin"))
+                                {
+                                    <li><a asp-action="Index" asp-controller="Category">Categories</a></li>
+                                }
                             }
-                            <li><a asp-action="Index" asp-controller="Order">Orders</a></li>
 
                         </ul>
                         </nav>
