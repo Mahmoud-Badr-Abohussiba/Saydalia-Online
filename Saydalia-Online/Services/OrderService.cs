@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using PagedList;
 using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Interfaces.InterfaceServices;
 using Saydalia_Online.Models;
@@ -134,14 +135,14 @@ namespace Saydalia_Online.Services
             return inCartOrder;
         }
 
-        public async Task<IEnumerable<Order>> getOrdersAsync(string userId)
+        public async Task<IPagedList<Order>> getOrdersAsync(string userId,int page)
         {
-            return await _orderRepository.getOrdersAsync(userId);
+            return await _orderRepository.getOrdersAsync(userId, page);
         }
 
-        public async Task<IEnumerable<Order>> getOrdersAsync()
+        public async Task<IPagedList<Order>> getOrdersAsync(int page)
         {
-            return await _orderRepository.getOrdersAsync();   
+            return await _orderRepository.getOrdersAsync(page);   
         }
 
         public async Task<int> UpdateOrder(Order order)

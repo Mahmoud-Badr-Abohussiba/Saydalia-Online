@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Saydalia_Online.Models.Category>
+﻿@model IPagedList<Saydalia_Online.Models.Category>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,37 +10,81 @@
     <p>
         <a asp-action="Create" class="btn btn-primary">Create New</a>
     </p>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    Actions
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    @if(Model.Count() > 0)
+    {
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-controller="Category" asp-route-Id="@item.Id" class="btn btn-primary">Edit</a>
-                    </td>
+                    <th>
+                       Id
+                    </th>
+                    <th>
+                       Name
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                   
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Category" asp-route-Id="@item.Id" class="btn btn-primary">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="row mt-5">
+            <div class="col-md-12 text-center">
+                <div class="site-block-27">
+                    <ul>
+                        @if (!Model.IsFirstPage)
+                        {
+                            var previousPageUrl = Url.Action("Index", new { page = Model.PageNumber - 1 });
+
+                            <li><a href="@previousPageUrl">&lt;</a></li>
+                        }
+
+                        @for (var i = 1; i <= Model.PageCount; i++)
+                        {
+                            if (i == Model.PageNumber)
+                            {
+                                <li class="active"><span>@i</span></li>
+                            }
+                            else
+                            {
+                                var pageUrl = Url.Action("Index", new { page = @i });
+
+                                <li><a href="@pageUrl">@i</a></li>
+                            }
+                        }
+
+                        @if (!Model.IsLastPage)
+                        {
+                            var nextPageUrl = Url.Action("Index", new { page = Model.PageNumber + 1 });
+
+                            <li><a href="@nextPageUrl">&gt;</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+       
+    }
+ 
 
 </div>

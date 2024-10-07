@@ -59,19 +59,6 @@
                                             List<Category> categories = ViewBag.MedicineCategories;
                                             foreach (var category in categories)
                                             {
-                                               @*if (category.SubCategories != null && category.SubCategories.Any())
-                                                {
-                                                <li class="has-children">
-                                                <a href="#">@category.Name</a>
-                                                <ul class="dropdown">
-                                                @foreach (var subCategory in category.SubCategories)
-                                                {
-                                                <li><a href="#">@subCategory.Name</a></li>
-                                                }
-                                                </ul>
-                                                </li>
-                                                } *@
-
                                                 <li><a asp-action="Details" asp-controller="Category" asp-route-id="@category.Id">@category.Name</a></li>
 
                                             }

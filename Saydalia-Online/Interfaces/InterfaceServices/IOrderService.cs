@@ -1,4 +1,5 @@
-﻿using Saydalia_Online.Models;
+﻿using PagedList;
+using Saydalia_Online.Models;
 
 namespace Saydalia_Online.Interfaces.InterfaceServices
 {
@@ -6,8 +7,8 @@ namespace Saydalia_Online.Interfaces.InterfaceServices
     {
         Task<Order> getDetailsById(int id);
         Task<Order> getDetailsByIdWithItems(int id);
-        Task<IEnumerable<Order>> getOrdersAsync(string userId);
-        Task<IEnumerable<Order>> getOrdersAsync();
+        Task<IPagedList<Order>> getOrdersAsync(string userId, int page);
+        Task<IPagedList<Order>> getOrdersAsync(int page);
         Task<Order> CreateOrUpdateInCartOrderAsync(string userId, int medicineId,int quantity);
 
         Task<int> UpdateOrder(Order order);

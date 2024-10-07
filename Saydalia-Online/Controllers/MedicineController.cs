@@ -23,9 +23,9 @@ namespace Saydalia_Online.Controllers
             _categoryRepository=categoryRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            var medicines = await _medicineRepository.GetAll();
+            var medicines = await _medicineRepository.GetAllPaginated(page??1);
             ViewBag.Medicines = medicines;
             return View(medicines);
         }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PagedList;
 using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Models;
 
@@ -66,22 +67,25 @@ namespace Saydalia_Online.Repositories
             return order;
         }
 
-        public async Task<IEnumerable<Order>> getOrdersAsync(string userId)
+        public async Task<IPagedList<Order>> getOrdersAsync(string userId,int page)
         {
-            var orders = await _dbContext.Orders.Where(e => e.UserID == userId)
+            var orders =  _dbContext.Orders.Where(e => e.UserID == userId && e.Status != "In Cart")
                .OrderByDescending(e=>e.CreatedAt)
+               .Include(e=>e.User)
                .Include(e => e.OrderItems)
                .ThenInclude(oi => oi.Medicine)
-               .ToListAsync();
+               .ToPagedList(page, 12);
             return orders;
         }
 
-        public async Task<IEnumerable<Order>> getOrdersAsync()
+        public async Task<IPagedList<Order>> getOrdersAsync(int page)
         {
-            var orders = await _dbContext.Orders.OrderByDescending(e => e.CreatedAt)
+            var orders =  _dbContext.Orders.Where(e=>e.Status != "In Cart")
+               .OrderByDescending(e => e.CreatedAt)
+               .Include(e => e.User)
                .Include(e => e.OrderItems)
                .ThenInclude(oi => oi.Medicine)
-               .ToListAsync();
+               .ToPagedList(page, 12);
             return orders;
         }
 
