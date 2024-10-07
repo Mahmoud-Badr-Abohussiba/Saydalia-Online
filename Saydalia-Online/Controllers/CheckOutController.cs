@@ -19,11 +19,19 @@ namespace Saydalia_Online.Controllers
             _paymentService = payService;
         }
 
-        public IActionResult Index()
+        [HttpPost]
+        public IActionResult Index(decimal totalAmount)
         {
             ViewBag.ClientID = _paypalClientId;
+            ViewBag.TotalAmount = totalAmount;
             return View();
         }
+
+        //public IActionResult Index()
+        //{
+        //    ViewBag.ClientID = _paypalClientId;
+        //    return View();
+        //}
 
         public async Task<JsonResult> CreateOrder([FromBody] JsonObject data)
         {
@@ -36,7 +44,7 @@ namespace Saydalia_Online.Controllers
             return await _paymentService.CompleteOrder(data);
         }
 
-        
-    
+
+
     }
 }
