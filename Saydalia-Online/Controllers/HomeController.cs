@@ -30,7 +30,7 @@ namespace Saydalia_Online.Controllers
         public async Task<IActionResult> Index()
         {
             var medicines = await _medicineRepository.GetAll();
-            return View(medicines.OrderByDescending(m=>m.CreatedAt).Take(10).ToList());
+            return View(medicines.OrderByDescending(m=>m.CreatedAt).Take(9).ToList());
         }
        
         public IActionResult Privacy()

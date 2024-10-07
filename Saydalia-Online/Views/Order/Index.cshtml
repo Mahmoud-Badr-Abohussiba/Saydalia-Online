@@ -16,7 +16,7 @@
                         Id
                     </th>
                     <th>
-                        User Name
+                        Name
                     </th>
                     <th>
                         Phone
@@ -28,10 +28,10 @@
                         Status
                     </th>
                     <th>
-                        Total Amount $
+                        Total $
                     </th>
                     <th>
-                        Order Date
+                        Date
                     </th>
                     <th>
                         Actions
@@ -64,10 +64,14 @@
                             @Html.DisplayFor(modelItem => item.OrderDate)
                         </td>
                         <td>
-                            <a asp-action="Details" asp-controller="Order" asp-route-Id="@item.Id" class="btn btn-primary">Details</a>
+                            <a asp-action="Details" asp-controller="Order" asp-route-Id="@item.Id" class="btn btn-primary m-1">Details</a>
                             @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
                             {
-                                <a asp-action="Edit" asp-controller="Order" asp-route-Id="@item.Id" class="btn btn-primary">Edit</a>
+                                <a asp-action="Edit" asp-controller="Order" asp-route-Id="@item.Id" class="btn btn-primary m-1">Edit</a>
+                            }
+                            @if(item.Status == "Need Payment")
+                            {
+                                <a asp-action="Index" asp-controller="CheckOut" asp-route-totalAmount="@item.TotalAmount" asp-route-orderId="@item.Id" class="btn btn-primary m-1">Checkout</a>
                             }
                         </td>
                     </tr>

@@ -71,6 +71,18 @@ namespace Saydalia_Online.Controllers
         }
 
 
+        public async Task<IActionResult> UpdatePaidStatus(int id)
+        {
+            var order = await _orderService.getDetailsByIdWithItems(id);
+
+
+            order.Status = "Paid";
+            await _orderService.UpdateOrder(order);
+
+            return Json(new { success = true, message = "Order status updated successfully." });
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> AddToCart(int medicineId,int quantity)
         {
@@ -106,7 +118,7 @@ namespace Saydalia_Online.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var order = await _orderService.ConfrimAsync(userId,Address, Phone);
             // Redirect to the cart view or wherever appropriate
-            return RedirectToAction("Index", "Medicine");
+            return RedirectToAction("Index", "CheckOut", new { totalAmount = order.TotalAmount , orderId = order.Id});
         }
 
 

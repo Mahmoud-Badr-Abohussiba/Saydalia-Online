@@ -129,7 +129,7 @@ namespace Saydalia_Online.Services
             var inCartOrder = await _orderRepository.GetInCartOrderAsync(userId);
             inCartOrder.Address = Address;
             inCartOrder.Phone = Phone;
-            inCartOrder.Status = "Pending";
+            inCartOrder.Status = "Need Payment";
             inCartOrder.OrderDate = DateTime.Now;
             await _orderRepository.Update(inCartOrder);
             return inCartOrder;

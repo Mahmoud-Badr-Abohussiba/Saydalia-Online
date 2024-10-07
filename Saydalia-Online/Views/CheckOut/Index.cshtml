@@ -58,11 +58,34 @@
                 const details = await response.json();
 
                 if (details === "success") {
-                    document.getElementById("notification-container").innerHTML = `
+                    // gpt send request to update the order status to be paid
+                    const orderId = '@ViewBag.SaydaliaOrderId';
+                    const statusUpdateResponse = await fetch("@Url.ActionLink("UpdatePaidStatus", "Order")", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded", // Using form-urlencoded for query parameters
+                        },
+                        body: new URLSearchParams({
+                            id: orderId,
+                        })
+                    });
+
+                    const statusUpdateResult = await statusUpdateResponse.json();
+
+                    if (statusUpdateResult.success) {
+                        document.getElementById("notification-container").innerHTML = `
                                 <div class='alert alert-success alert-dismissible fade show' role='alert'>
-                                    <strong>The order is created successfully</strong>
+                                    <strong>The order is paid successfully</strong>
                                 </div>
                             `;
+                    } else {
+                        document.getElementById("notification-container").innerHTML = `
+                                <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                                    <strong>Order payment was successful, but status update failed</strong>
+                                </div>
+                            `;
+                    }
+
                 } else {
                     document.getElementById("notification-container").innerHTML = `
                                 <div class='alert alert-danger alert-dismissible fade show' role='alert'>
