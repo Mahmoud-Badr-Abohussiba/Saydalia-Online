@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Saydalia_Online.Helpers;
 using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Models;
@@ -12,10 +13,12 @@ namespace Saydalia_Online.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IMedicineRepository _medicineRepository;
 
-        public CategoryController(ICategoryRepository categoryRepository)
+        public CategoryController(ICategoryRepository categoryRepository, IMedicineRepository medicineRepository)
         {
             _categoryRepository = categoryRepository;
+            _medicineRepository = medicineRepository;
         }
 
         //OnActionExecuting function is being called when any action in it's containing controller called
@@ -103,5 +106,24 @@ namespace Saydalia_Online.Controllers
             }
             return View(model);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Pharmacist, Admin")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var model = await _categoryRepository.GetByIdWithProducts(id);
+            if ( !model.Medicines.IsNullOrEmpty() )
+            {
+                foreach(var item in model.Medicines)
+                {
+                    await _medicineRepository.Delete(item);
+                }
+            }
+            await _categoryRepository.Delete(model);
+            return RedirectToAction("Index");
+        }
+
+
     }
 }

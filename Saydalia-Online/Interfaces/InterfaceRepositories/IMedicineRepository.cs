@@ -1,4 +1,5 @@
-﻿using Saydalia_Online.Models;
+﻿using PagedList;
+using Saydalia_Online.Models;
 
 namespace Saydalia_Online.Interfaces.InterfaceRepositories
 {
@@ -10,7 +11,7 @@ namespace Saydalia_Online.Interfaces.InterfaceRepositories
         Task<IEnumerable<Medicine>> DisplayUsingPriceLowToHigh();
         Task<IEnumerable<Medicine>> DisplayUsingPriceHighToLow();
         Task<IEnumerable<Medicine>> DisplayAllBetweenTwoPrices(int minPrice, int maxPrice);
-        Task<IEnumerable<Medicine>> SearchByName(string name);
+        Task<IPagedList<Medicine>> SearchByName(string name);
         Task<Medicine> GetByIdAsNoTracking(int id);
 
     }

@@ -16,7 +16,14 @@
 
    <div class="site-section">
       <div class="container">
-           @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
+        @if (TempData["errorMessage"] != null)
+        {
+            <div class="row mb-3 alert-danger col-lg-6">
+                <p>@TempData["errorMessage"]</p>
+            </div>
+        }
+
+        @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
         {
             <div class="col-lg-6">
                 <a asp-action="Create" asp-controller="Medicine" class="btn btn-primary">Add Medicine</a>
@@ -24,6 +31,8 @@
                 @* <a asp-action="Create" asp-controller="Category" class="btn btn-primary">Add Category</a> *@
             </div>
         }
+
+      
 
         @if(Model.Any())
         {
@@ -65,10 +74,51 @@
                             @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
                             {
                                 <a asp-action="Edit" asp-controller="Medicine" asp-route-Id="@medicine.Id" class="btn btn-primary">Edit</a>
+                                <form asp-action="Delete" asp-controller="Medicine" asp-route-Id="@medicine.Id" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure, this action will delete the medicine?');">
+                                        Delete
+                                    </button>
+                                </form>
                             }
                         </div>
                     }
                 }
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                    <div class="site-block-27">
+                        <ul>
+                            @if (!Model.IsFirstPage)
+                            {
+                                var previousPageUrl = Url.Action("Index", new { page = Model.PageNumber - 1 });
+
+                                <li><a href="@previousPageUrl">&lt;</a></li>
+                            }
+
+                            @for (var i = 1; i <= Model.PageCount; i++)
+                            {
+                                if (i == Model.PageNumber)
+                                {
+                                    <li class="active"><span>@i</span></li>
+                                }
+                                else
+                                {
+                                    var pageUrl = Url.Action("Index", new { page = @i });
+
+                                    <li><a href="@pageUrl">@i</a></li>
+                                }
+                            }
+
+                            @if (!Model.IsLastPage)
+                            {
+                                var nextPageUrl = Url.Action("Index", new { page = Model.PageNumber + 1 });
+
+                                <li><a href="@nextPageUrl">&gt;</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             

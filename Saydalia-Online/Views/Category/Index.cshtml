@@ -35,10 +35,16 @@
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Name)
+                            <a asp-action="Details" asp-controller="Category" asp-route-id="@item.Id">@item.Name</a>
                         </td>
                         <td>
                             <a asp-action="Edit" asp-controller="Category" asp-route-Id="@item.Id" class="btn btn-primary">Edit</a>
+                            @* <a asp-action="Delete" asp-controller="Category" asp-route-Id="@item.Id" class="btn btn-danger">Delete</a> *@
+                            <form asp-action="Delete" asp-controller="Category" asp-route-Id="@item.Id" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('This will delete all medications belong to this category?');">
+                                    Delete
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 }

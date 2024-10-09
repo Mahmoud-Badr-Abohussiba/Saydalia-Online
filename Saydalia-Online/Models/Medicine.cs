@@ -33,5 +33,7 @@ namespace Saydalia_Online.Models
         [Display(Name = "Category Of Medicine")]
 
         public virtual Category? Categories { get; set; }
-	}
+
+        public ICollection<OrderItem> OrderItems { get; set; }
+    }
 }

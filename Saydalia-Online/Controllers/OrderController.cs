@@ -128,6 +128,21 @@ namespace Saydalia_Online.Controllers
             return View("OrderCompleted");
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetCartItemCount()
+        {
+            int count = 0;
+            if (User.Identity.IsAuthenticated)
+            {
+                // Get the logged-in user's ID from the claims
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var order = await _orderService.GetInCartOrderAsync(userId);
+                count = order.OrderItems.Count();
+            }
+
+            return Json(count);
+        }
+
 
     }
 }

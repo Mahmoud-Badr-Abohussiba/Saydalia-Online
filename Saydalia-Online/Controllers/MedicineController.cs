@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using Saydalia_Online.Helpers;
 using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Models;
@@ -141,6 +143,24 @@ namespace Saydalia_Online.Controllers
             var medicines = await _medicineRepository.SearchByName(search);
             ViewBag.Medicines = medicines;
             return View("Index", medicines);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Pharmacist, Admin")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var medicne = await _medicineRepository.Details(id);
+            if (medicne.OrderItems.IsNullOrEmpty())
+            {
+                 await _medicineRepository.Delete(medicne);
+                 return RedirectToAction("index");
+            }
+
+            TempData["errorMessage"] = "Can not delete medicine used in orders";
+
+            return RedirectToAction("index");
+
         }
     }
 }

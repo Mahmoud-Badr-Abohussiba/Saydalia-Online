@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Models;
 
@@ -17,7 +18,7 @@ namespace Saydalia_Online.Repositories
 
         public async Task<Medicine> Details(int id)
         {
-            return await _dbContext.Medicines.Include( m => m.Categories).FirstOrDefaultAsync(m => m.Id == id);
+            return await _dbContext.Medicines.Include( m => m.Categories).Include(m => m.OrderItems).FirstOrDefaultAsync(m => m.Id == id);
         }
 
         public async Task<IEnumerable<Medicine>> DisplayAllBetweenTwoPrices(int minPrice, int maxPrice)
@@ -60,9 +61,9 @@ namespace Saydalia_Online.Repositories
             return medicine;
         }
 
-        public async Task<IEnumerable<Medicine>> SearchByName(string name)
+        public async Task<IPagedList<Medicine>> SearchByName(string name)
         {
-            return await _dbContext.Medicines.Where(m => m.Name.Contains(name)).ToListAsync();
+            return  _dbContext.Medicines.Where(m => m.Name.Contains(name)).ToPagedList(1,12);
         }
     }
 }
