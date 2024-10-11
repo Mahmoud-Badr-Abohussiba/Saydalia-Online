@@ -25,6 +25,14 @@ namespace Saydalia_Online.Controllers
             _categoryRepository=categoryRepository;
         }
 
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            var catgs = await _categoryRepository.GetAll();
+            ViewBag.MedicineCategories = catgs;
+
+            await next(); // This ensures the action method executes after your logic
+        }
+
         public async Task<IActionResult> Index(int? page)
         {
             var medicines = await _medicineRepository.GetAllPaginated(page??1);
@@ -147,7 +155,7 @@ namespace Saydalia_Online.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Pharmacist, Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var medicne = await _medicineRepository.Details(id);

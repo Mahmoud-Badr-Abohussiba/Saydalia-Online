@@ -65,5 +65,10 @@ namespace Saydalia_Online.Repositories
         {
             return  _dbContext.Medicines.Where(m => m.Name.Contains(name)).ToPagedList(1,12);
         }
+
+        public async Task<IPagedList<Medicine>> GetAllForCategory(int id,int page)
+        {
+            return _dbContext.Medicines.Where(m => m.Cat_Id == id).Include(m=>m.Categories).ToPagedList(page, 12);
+        }
     }
 }

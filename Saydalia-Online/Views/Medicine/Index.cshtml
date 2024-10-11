@@ -74,11 +74,14 @@
                             @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
                             {
                                 <a asp-action="Edit" asp-controller="Medicine" asp-route-Id="@medicine.Id" class="btn btn-primary">Edit</a>
-                                <form asp-action="Delete" asp-controller="Medicine" asp-route-Id="@medicine.Id" method="post" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure, this action will delete the medicine?');">
-                                        Delete
-                                    </button>
-                                </form>
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <form asp-action="Delete" asp-controller="Medicine" asp-route-Id="@medicine.Id" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure, this action will delete the medicine?');">
+                                            Delete
+                                        </button>
+                                    </form>
+                                }
                             }
                         </div>
                     }

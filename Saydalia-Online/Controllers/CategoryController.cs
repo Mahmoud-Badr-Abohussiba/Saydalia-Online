@@ -10,6 +10,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace Saydalia_Online.Controllers
 {
+
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -39,9 +40,9 @@ namespace Saydalia_Online.Controllers
 			return View(categoryid);
 		}
 
-		public async Task<IActionResult> Details(int id)
+		public async Task<IActionResult> Details(int id,int? page)
         {
-            var cat = await _categoryRepository.GetByIdWithProducts(id);
+            var cat = await _medicineRepository.GetAllForCategory(id, page??1);
                                 
             return View(cat);
         }
@@ -109,7 +110,7 @@ namespace Saydalia_Online.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Pharmacist, Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var model = await _categoryRepository.GetByIdWithProducts(id);

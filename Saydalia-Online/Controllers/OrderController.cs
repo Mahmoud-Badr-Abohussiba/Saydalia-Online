@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Interfaces.InterfaceServices;
 using Saydalia_Online.Models;
+using Saydalia_Online.Repositories;
 using Saydalia_Online.ViewModels;
 using System.Security.Claims;
 using static NuGet.Packaging.PackagingConstants;
@@ -12,10 +15,21 @@ namespace Saydalia_Online.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public OrderController(IOrderService orderService)
+
+        public OrderController(IOrderService orderService,ICategoryRepository categoryRepository)
         {
-            _orderService = orderService; 
+            _orderService = orderService;
+            _categoryRepository = categoryRepository;
+        }
+
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            var catgs = await _categoryRepository.GetAll();
+            ViewBag.MedicineCategories = catgs;
+
+            await next(); // This ensures the action method executes after your logic
         }
 
         public async Task<IActionResult> Index(int? page)
