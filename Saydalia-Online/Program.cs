@@ -7,6 +7,8 @@ using Saydalia_Online.Repositories;
 using Saydalia_Online.Interfaces.InterfaceRepositories;
 using Saydalia_Online.Interfaces.InterfaceServices;
 using Saydalia_Online.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Configuration;
 
 namespace Saydalia_Online
 {
@@ -48,6 +50,9 @@ namespace Saydalia_Online
             builder.Services.AddRazorPages();
 
             builder.Services.AddAuthentication();
+
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
             var app = builder.Build();
 
