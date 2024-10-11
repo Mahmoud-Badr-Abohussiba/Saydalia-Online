@@ -10,7 +10,7 @@
     @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
     {
         <p>
-            <a asp-action="Create" class="btn btn-primary">Create New</a>
+            <a asp-action="Create" class="btn btn-primary">Add Category</a>
         </p>
     }
     @if(Model.Count() > 0)

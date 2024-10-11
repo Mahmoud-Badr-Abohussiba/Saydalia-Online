@@ -1,23 +1,23 @@
 ﻿@model Medicine
 @{
     ViewData["Title"] = "Create";
-    Layout = "_Layout";
-
 }
 
-<h1>Create</h1>
-<br />
-<br />
-<form method="post" asp-action="Create" enctype="multipart/form-data">
-    <div asp-validation-summary="All"></div>
+<div class="container">
 
-    <partial name="PartialViews/_CreateEditMedicinePartialView" />
-    <br />
-    <br />
-    <input type="submit" value="Submit" class="btn btn-primary" /> |
-    <a class="btn btn-light" asp-action="Index">Back To List</a>
-</form>
+    <h1>Create Medicine</h1>
+    <form method="post" asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="All"></div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+        <partial name="PartialViews/_CreateEditMedicinePartialView" />
+        <br />
+        <br />
+        <input type="submit" value="Submit" class="btn btn-primary" /> |
+        <a class="btn btn-light" asp-action="Index">Back To List</a>
+    </form>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</div>
