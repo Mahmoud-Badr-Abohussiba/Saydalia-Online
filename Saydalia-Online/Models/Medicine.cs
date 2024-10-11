@@ -34,6 +34,6 @@ namespace Saydalia_Online.Models
 
         public virtual Category? Categories { get; set; }
 
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public ICollection<OrderItem>? OrderItems { get; set; }
     }
 }
