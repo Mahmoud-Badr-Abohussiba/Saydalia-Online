@@ -1,0 +1,25 @@
+﻿@model Medicine
+@{
+    ViewData["Title"] = "Edit";
+
+}
+
+<div class="container">
+
+    <h1>Edit Medicine</h1>
+
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
+        <div asp-validation-summary="All"></div>
+        <input type="hidden" asp-for="ImageName" />
+        <partial name="PartialViews/_CreateEditMedicinePartialView" />
+        <br />
+        <br />
+        <input type="submit" value="Submit" class="btn btn-primary" /> |
+        <a class="btn btn-light" asp-action="Index">Back To List</a>
+    </form>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</div>

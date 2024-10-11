@@ -1,0 +1,83 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div class="container">
+    <div class="row justify-content-center">
+    <div class="col-md-4">
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+                <h1 class="text-info mb-2 w-100 text-center mt-4 " style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif"> Register </h1>
+                @if (TempData["StatusMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["StatusMessage"]
+                    </div>
+                }
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                <div class="form-floating mb-3 mt-4 w-100 d-flex justify-content-center">
+                    <img id="myImg" style="height:250px; width:250px; margin-inline:auto;" class="rounded-circle  img-fluid" />
+                </div>
+
+                <div class="form-floating mb-3 mt-4">
+                    <label asp-for="Input.name">User Name</label>
+                    <input asp-for="Input.name" type="text" class="form-control" aria-required="true" placeholder="enter your name" />
+                    <span asp-validation-for="Input.name" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3 mt-4">
+                    <label asp-for="Input.Email">Email</label>
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3 mt-4">
+                    <label asp-for="Input.phone">Phone Number</label>
+                    <input asp-for="Input.phone" class="form-control" aria-required="true" placeholder="enter your phone number" />
+                    <span asp-validation-for="Input.phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <label asp-for="Input.Password">Password</label>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <label>Profile Picture</label>
+                    <input type="file" asp-for="Input.clientfile" onchange="loadFile(event)" />
+                    <span asp-validation-for="Input.clientfile" class="text-danger"></span>
+                </div>
+
+                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mt-3">Create</button>
+
+                <div class="w-100 text-center fs-1 mt-2">
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="text-info">Go to Login ?</a>
+                </div>
+            </form>
+    </div>
+</div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        var loadFile = function (event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var myimg = document.getElementById('myImg');
+                myimg.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+}

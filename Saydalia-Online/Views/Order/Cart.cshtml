@@ -1,0 +1,145 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0">
+                <a href="/">Home</a> <span class="mx-2 mb-0">/</span>
+                <strong class="text-black">Cart</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section">
+    <div class="container">
+      
+        @if (Model.OrderItems.Count() > 0)
+        {
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <div class="site-blocks-table">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">Image</th>
+                                    <th class="product-name">Product</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-total">Total</th>
+                                    <th class="product-remove">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OrderItems)
+                                {
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <img src="~/files/images/@item.Medicine.ImageName" alt="Image" class="img-fluid">
+                                        </td>
+                                        <td class="product-name">
+                                            <h2 class="h5 text-black">@item.Medicine.Name</h2>
+                                        </td>
+                                        <td>$@item.Medicine.Price</td>
+                                        <td>@item.Quantity</td>
+                                        <td>$@item.Price</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <form asp-action="Edit" asp-controller="OrderItem" method="post">
+                                                    <input hidden name="id" value=@item.Id />
+                                                    <button type="submit" class="btn btn-primary height-auto btn-sm m-2">Edit</button>
+                                                </form>
+                                                <form asp-action="Delete" asp-controller="OrderItem" method="post">
+                                                    <input hidden name="itemId" value=@item.Id />
+                                                    <button type="submit" class="btn btn-danger height-auto btn-sm m-2">Remove</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery Information Form -->
+            <form asp-action="Confirm" asp-controller="Order" method="post">
+                @if (TempData["errorMessage"] != null)
+                {
+                    <div class="row mb-3 alert-danger col-lg-6">
+                        <p>@TempData["errorMessage"]</p>
+                    </div>
+                }
+                <div class="row mb-5">
+                    <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="col-md-12 text-left">
+                                <h3 class="h4 text-uppercase">Delivery Information</h3>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label asp-for="Address" class="form-label">Address</label>
+                                <input type="text" asp-for="Address" class="form-control form-control-lg" placeholder="Enter your address" required />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label asp-for="Phone" class="form-label">Phone</label>
+                                <input type="text" asp-for="Phone" class="form-control form-control-lg" placeholder="Enter your phone number"
+                                       pattern="^[+]?\d{0,13}$" title="Please enter a valid phone number" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="col-md-12 text-left">
+                                <h3 class="h4 text-uppercase">Cart Totals</h3>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <span class="text-black">Total</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong class="text-black">$ @Model.TotalAmount</strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" style="font-size:19px; height:50px;" class="btn btn-warning mt-3 btn-block">Confirm Order</button>
+                                <a style="font-size:19px; height:50px;" class="btn btn-primary mt-3 btn-block" asp-action="Index" asp-controller="Medicine">CONTINUE SHOPPING   <span style="font-size:25px; text-align:center;">  > </span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-12 text-left border-bottom mb-5">
+                                    <h3 class="text-black h4 text-uppercase">Your cart is empty</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 d-flex">
+                                    <a class="btn btn-primary btn-lg btn-block" asp-action="Index" asp-controller="Medicine">Go to store</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

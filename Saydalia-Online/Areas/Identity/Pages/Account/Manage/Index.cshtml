@@ -1,0 +1,115 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+
+@if (TempData["StatusMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["StatusMessage"]
+    </div>
+}
+
+@if (TempData["successData"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["successData"]
+    </div>
+}
+
+
+<div class="row w-100">
+    <div class="col-md-6">
+        <form id="profile-form" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <!-- Profile Image Display -->
+            <div class="form-floating mb-3 mt-4 d-flex justify-content-center w-100">
+                <img id="myImgold" height="200" style="height:250px; width:250px; margin-inline:auto;" class="rounded-circle thumbnail img-fluid" src="~/images/@Model.pathImg" />
+                <img id="myImg" height="200" style="height:250px; width:250px; margin-inline:auto;" class="rounded-circle thumbnail img-fluid d-none" />
+            </div>
+
+            <!-- File Input for Profile Picture -->
+            <div class="form-floating mb-3 text-center">
+                <label for="updateImage" class="text text-info fs-5" style="cursor:pointer;">change profile picture</label>
+                <input id="updateImage" class="d-none" type="file" asp-for="Input.clientfiles" onchange="loadFile(event)" />
+                <span asp-validation-for="Input.clientfiles" class="text-danger"></span>
+            </div>
+
+            <!-- Name Section -->
+            <div class="form-floating mb-3">
+                <div class="d-flex flex-wrap align-items-center">
+                    <div>
+                        <div class="d-flex">
+                            <input asp-for="NameUser" type="text" class="form-control mr-3" placeholder="Please enter your name" id="nameUserInput" required disabled />
+                            <label id="updateName" class="text text-info fs-5 w-50" style="cursor:pointer;"> change name </label>
+                        </div>
+                        <label class="form-label">Name</label>
+                    </div>
+
+                    <div id="NewName" class="d-none">
+                        <input asp-for="Input.NewName" type="text" class="form-control mr-3" placeholder="Please enter your name" id="NewUsername" required />
+                        <label class="form-label">New Name</label>
+                    </div>
+                </div>
+                <span asp-validation-for="NameUser" class="text-danger"></span>
+                <span asp-validation-for="Input.NewName" class="text-danger"></span>
+            </div>
+
+            <!-- Email Section -->
+            <div class="form-floating mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
+                <label class="form-label">Email</label>
+            </div>
+
+            <!-- Phone Section -->
+            <div class="d-flex flex-wrap align-items-center">
+                <div>
+                    <div class="d-flex">
+                        <input asp-for="Input.PhoneNumber" type="text" class="form-control mr-3" id="PhoneUserInput" disabled />
+                        <label id="updatePhone" class="text text-info fs-5 w-50" style="cursor:pointer;"> change phone number </label>
+                    </div>
+                    <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                </div>
+
+                <div id="NewphoneDiv" class="d-none">
+                    <input asp-for="Input.NewPhone" type="text" class="form-control mr-3" placeholder="Please enter your phone" id="NewUserPhone" required />
+                    <label class="form-label">New phone number</label>
+                </div>
+            </div>
+            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            <span asp-validation-for="Input.NewPhone" class="text-danger"></span>
+
+            <!-- Save Button -->
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById("updateName").addEventListener("click", function () {
+            var newnameInput = document.getElementById("NewName");
+            newnameInput.classList.remove("d-none");
+        });
+
+        document.getElementById("updatePhone").addEventListener("click", function () {
+            var newPhoneInput = document.getElementById("NewphoneDiv");
+            newPhoneInput.classList.remove("d-none");
+        });
+
+        var loadFile = function (event) {
+            var output = document.getElementById('myImg');
+            var outputOld = document.getElementById('myImgold');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            outputOld.classList.add("d-none");
+            output.classList.remove("d-none");
+        };
+    </script>
+}

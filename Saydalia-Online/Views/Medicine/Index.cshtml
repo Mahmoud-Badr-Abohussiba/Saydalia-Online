@@ -1,0 +1,140 @@
+﻿@model IPagedList<Medicine>
+@{
+    ViewData["Title"] = "Store";
+}
+
+ <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0">
+            <a href="/">Home</a> <span class="mx-2 mb-0">/</span>
+            <strong class="text-black">@ViewBag.Title</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   <div class="site-section">
+      <div class="container">
+        @if (TempData["errorMessage"] != null)
+        {
+            <div class="row mb-3 alert-danger col-lg-6">
+                <p>@TempData["errorMessage"]</p>
+            </div>
+        }
+
+        @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
+        {
+            <div class="col-lg-6">
+                <a asp-action="Create" asp-controller="Medicine" class="btn btn-primary">Add Medicine</a>
+                @* <a asp-action="Index" asp-controller="Category" class="btn btn-primary">All Categories</a> *@
+                @* <a asp-action="Create" asp-controller="Category" class="btn btn-primary">Add Category</a> *@
+            </div>
+        }
+
+      
+
+        @if(Model.Any())
+        {
+
+            <div class="row">
+                @{
+
+                    foreach (Medicine medicine in Model)
+                    {
+                        <div class="col-sm-6 col-lg-4 text-center item mb-4">
+
+                            <div class="m-3">
+                                <a asp-action="Details" asp-controller="Medicine" asp-route-Id="@medicine.Id">
+                                    <img src="/files/images/@medicine.ImageName" class="card-img-top img-fluid mb-3" style="max-height:300px; max-width:250px;" alt="@medicine.Name">
+                                </a>
+                            </div>
+                            <h3 class="text-dark">
+                                <a asp-action="Details" asp-controller="Medicine" asp-route-Id="@medicine.Id">@medicine.Name</a>
+                            </h3>
+                            <p class="price">  $@medicine.Price</p>
+                            @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
+                            {
+                                <a asp-action="Edit" asp-controller="Medicine" asp-route-Id="@medicine.Id" class="btn btn-primary">Edit</a>
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <form asp-action="Delete" asp-controller="Medicine" asp-route-Id="@medicine.Id" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure, this action will delete the medicine?');">
+                                            Delete
+                                        </button>
+                                    </form>
+                                }
+                            }
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                    <div class="site-block-27">
+                        <ul>
+                            @if (!Model.IsFirstPage)
+                            {
+                                var previousPageUrl = Url.Action("Index", new { page = Model.PageNumber - 1 });
+
+                                <li><a href="@previousPageUrl">&lt;</a></li>
+                            }
+
+                            @for (var i = 1; i <= Model.PageCount; i++)
+                            {
+                                if (i == Model.PageNumber)
+                                {
+                                    <li class="active"><span>@i</span></li>
+                                }
+                                else
+                                {
+                                    var pageUrl = Url.Action("Index", new { page = @i });
+
+                                    <li><a href="@pageUrl">@i</a></li>
+                                }
+                            }
+
+                            @if (!Model.IsLastPage)
+                            {
+                                var nextPageUrl = Url.Action("Index", new { page = Model.PageNumber + 1 });
+
+                                <li><a href="@nextPageUrl">&gt;</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            
+        }
+    </div>
+    </div>
+
+
+    <div class="site-section bg-secondary bg-image" style="background-image: url('/images/bg_2.jpg');">
+      <div class="container">
+        <div class="row align-items-stretch">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/images/bg_1.jpg');">
+              <div class="banner-1-inner align-self-center">
+                <h2>Pharma Products</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/images/bg_2.jpg');">
+              <div class="banner-1-inner ml-auto  align-self-center">
+                <h2>Rated by Experts</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+

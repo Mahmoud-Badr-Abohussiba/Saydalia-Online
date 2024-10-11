@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700|Crimson+Text:400,400i" rel="stylesheet">
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+
+
+    <link rel="stylesheet" href="/css/aos.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=@(ViewBag.ClientID)&currency=USD"></script>
+</head>
+<body>
+    <div class="site-wrap">
+
+        <div class="site-navbar py-2">
+
+            <div class="search-wrap">
+                <div class="container">
+                    <a href="#" class="search-close js-search-close"><span class="icon-close2"></span></a>
+                    <form asp-action="Search" asp-controller="Medicine" method="post">
+                        <input name="search" type="text" class="form-control" placeholder="Search keyword and hit enter...">
+                    </form>
+                </div>
+            </div>
+
+                <div class="d-flex align-items-center justify-content-between px-4">
+                    <div class="logo">
+                        <div class="site-logo">
+                            <a href="/" class="js-logo-clone">Saydalia Online</a>
+                        </div>
+                    </div>
+                    <div class="main-nav d-none d-lg-block">
+                        <nav class="site-navigation text-right text-md-center" role="navigation">
+                            <ul class="site-menu js-clone-nav d-none d-lg-block">
+                            @if (ViewBag.Title == "Home Page")
+                            {
+                                <li class="active"><a href="/">Home</a></li>
+
+                            }
+                            else
+                            {
+                                <li><a href="/">Home</a></li>
+                            }
+
+                            @if (ViewBag.Title == "Store")
+                            {
+                                <li class="active"><a asp-action="Index" asp-controller="Medicine">Store</a></li>
+                            }
+                            else
+                            {
+                                <li><a asp-action="Index" asp-controller="Medicine">Store</a></li>
+                            }
+
+                           
+                            <li class="has-children">
+                                <a asp-action="Index" asp-controller="Category">Categories</a>
+                                <ul class="dropdown">
+                                    @if (ViewBag.MedicineCategories != null)
+                                    {
+                                        List<Category> categories = ViewBag.MedicineCategories;
+                                        int i = 0;
+                                        foreach (var category in categories)
+                                        {
+                                            i++;
+                                            if (i < 9)
+                                            {
+                                                <li><a asp-action="Details" asp-controller="Category" asp-route-id="@category.Id">@category.Name</a></li>
+                                            }
+                                        }
+
+                                    }
+                                </ul>
+                            </li>
+
+                            @if (ViewBag.Title == "About")
+                            {
+                                <li class="active"><a asp-action="About" asp-controller="Home">About</a></li>
+                            }
+                            else
+                            {
+                                <li><a asp-action="About" asp-controller="Home">About</a></li>
+
+                            }
+
+                            @if (User.Identity.IsAuthenticated )
+                            {
+                                if (ViewBag.Title == "Orders")
+                                {
+                                    <li class="active"><a asp-action="Index" asp-controller="Order">Orders</a></li>
+                                }
+                                else
+                                {
+                                    <li><a asp-action="Index" asp-controller="Order">Orders</a></li>
+                                }
+                            }
+                            
+                        </ul>
+                        </nav>
+                    </div>
+                    <div class="icons">
+                        <a href="#" class="icons-btn d-inline-block js-search-open"><span class="icon-search"></span></a>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Cart" asp-controller="Order" class="icons-btn d-inline-block bag">
+                                <span class="icon-shopping-bag" id="cartIcon"></span>
+                                <span class="number" id="cartCount">0</span>
+                            </a>
+                        }
+
+                        <a href="#" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none">
+                            <span class="icon-menu"></span>
+                        </a>
+                    </div>
+                    <partial name="_LoginPartial" />
+
+                </div>
+        </div>
+
+
+
+        <div>
+            @RenderBody()
+        </div>
+
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 mb-4 mb-lg-0">
+
+                        <div class="block-7">
+                            <h3 class="footer-heading mb-4">About Us</h3>
+                            <p>
+                                Saydalia Online is a digital pharmacy that makes it easy to get the medicines and health products you need from home. With a wide range of medicines, vitamins, and wellness items, you can browse, compare, and order your products quickly.
+                                <br />
+                                Our easy-to-use website helps you find the right medicines, read product details, check prices, and see alternative choices. You can place an order in just a few steps, pick your delivery option, and have your medicines delivered safely to your door.
+                            </p>
+                        </div>
+
+                    </div>
+                     <div class="col-lg-3 mx-auto mb-5 mb-lg-0">
+                    
+                    </div> 
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="block-5 mb-5">
+                            <h3 class="footer-heading mb-4">Contact Info</h3>
+                            <ul class="list-unstyled">
+                                <li class="address">Taha Hussien Street, El-Nozha, Cairo</li>
+                                <li class="phone">+201155700300</li>
+                                <li class="email"> <a href="mailto:saydaliaonline.depi@gmail.com">saydaliaonline.depi@gmail.com</a></li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row pt-5 mt-5 text-center">
+                    <div class="col-md-12">
+                        <p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
+                            with <i class="icon-heart" aria-hidden="true"></i> by <strong 
+                                                                                    class="text-primary">MedTech Team</strong>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/aos.js"></script>
+
+  <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () { 
+            // Fetch cart item count and update
+            const cartIcon = document.getElementById('cartIcon');
+            const cartCount = document.getElementById('cartCount');
+
+            if (cartIcon) {
+                // Make a request to get the number of items in the cart
+                fetch('/Order/GetCartItemCount', {
+                    method: 'GET',
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Update cart count
+                        if (data !== undefined) {
+                            cartCount.textContent = data;
+                        }
+                    })
+                    .catch(error => console.error('Error fetching cart count:', error));
+            }
+        });
+
+    </script>
+
+  @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

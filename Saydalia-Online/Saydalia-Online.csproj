@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -6,5 +6,279 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Saydalia_Online</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="NewFolder1\**" />
+    <Content Remove="NewFolder1\**" />
+    <EmbeddedResource Remove="NewFolder1\**" />
+    <None Remove="NewFolder1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_NewLayout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\_NewLayout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\_NewLayout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\fonts\icomoon\demo-files\demo.js" />
+    <None Include="wwwroot\fonts\icomoon\fonts\icomoon.svg" />
+    <None Include="wwwroot\images\.DS_Store" />
+    <None Include="wwwroot\images\avatar\avatar-2.svg" />
+    <None Include="wwwroot\images\avatar\avatar-face-02.webp" />
+    <None Include="wwwroot\images\avatar\avatar-face-03.webp" />
+    <None Include="wwwroot\images\avatar\avatar-face-04.webp" />
+    <None Include="wwwroot\images\avatar\avatar-face-05.webp" />
+    <None Include="wwwroot\images\avatar\avatar-illustrated-01.webp" />
+    <None Include="wwwroot\images\avatar\avatar-illustrated-02.webp" />
+    <None Include="wwwroot\images\avatar\avatar-illustrated-03.webp" />
+    <None Include="wwwroot\images\avatar\avatar-illustrated-04.webp" />
+    <None Include="wwwroot\images\avatar\Avatar.svg" />
+    <None Include="wwwroot\images\categories\01.webp" />
+    <None Include="wwwroot\images\categories\02.webp" />
+    <None Include="wwwroot\images\categories\03.webp" />
+    <None Include="wwwroot\images\categories\04.webp" />
+    <None Include="wwwroot\images\svg\404.svg" />
+    <None Include="wwwroot\images\svg\baloon.svg" />
+    <None Include="wwwroot\images\svg\Bulk\2 User.svg" />
+    <None Include="wwwroot\images\svg\Bulk\3-User-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\3-User-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Activity.svg" />
+    <None Include="wwwroot\images\svg\Bulk\AddUser.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Down.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Down2.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Down3.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-DownCircle.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-DownSquare.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Left.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Left2.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Left3.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-LeftCircle.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-LeftSquare.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Right.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Right2.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Right3.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-RightCircle.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-RightSquare.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Up.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Up2.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-Up3.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-UpCircle.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrow-UpSquare.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Arrows-up-down.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Bag 3.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Bag.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Bookmark.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Buy.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Calendar.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Call Missed.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Call Silent.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Call.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Calling.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Camera.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Category-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Category-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Chart.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Chat.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Close Square.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Danger.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Delete.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Discount.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Discovery.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Document-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Document-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Download.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Edit Square.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Edit-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Edit-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Filter 2.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Filter.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Folder-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Folder-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Game.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Graph.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Heart.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Hide.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Home-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Home-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Image 3.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Image-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Image-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Info Circle.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Info Square.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Location.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Lock.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Login.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Logout.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Menu-toggle-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Menu-toggle-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Message-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Message-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\More Circle.svg" />
+    <None Include="wwwroot\images\svg\Bulk\More Square.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Notification-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Notification.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Paper Download.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Paper Fail.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Paper Negative.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Paper Plus.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Paper Upload.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Paper-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Paper-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Password.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Play.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Plus.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Profile.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Scan.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Search.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Send.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Setting-gray.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Setting-white.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Settings-line.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Shield Done.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Shield Fail.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Show.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Star.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Swap.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Tick Square.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Ticket Star.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Ticket.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Time Square.svg" />
+    <None Include="wwwroot\images\svg\Bulk\TimeCircle.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Unlock.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Upload.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Video.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Voice 3.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Voice.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Volume Down.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Volume Off.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Volume Up.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Wallet.svg" />
+    <None Include="wwwroot\images\svg\Bulk\Work.svg" />
+    <None Include="wwwroot\images\svg\customers.svg" />
+    <None Include="wwwroot\images\svg\dropbox.svg" />
+    <None Include="wwwroot\images\svg\GoogleDrive.svg" />
+    <None Include="wwwroot\images\svg\image-frame.svg" />
+    <None Include="wwwroot\images\svg\Logo.svg" />
+    <None Include="wwwroot\images\svg\move.svg" />
+    <None Include="wwwroot\images\svg\radio.svg" />
+    <None Include="wwwroot\images\svg\thumbnail.svg" />
+    <None Include="wwwroot\images\wave.svg" />
+    <None Include="wwwroot\plugins\chart.min.js" />
+    <None Include="wwwroot\plugins\feather.min.js" />
+    <None Include="wwwroot\plugins\feather.min.js.map" />
+    <None Include="wwwroot\scss\.DS_Store" />
+    <None Include="wwwroot\scss\bootstrap\.DS_Store" />
+    <None Include="wwwroot\scss\bootstrap\bootstrap-grid.scss" />
+    <None Include="wwwroot\scss\bootstrap\bootstrap-reboot.scss" />
+    <None Include="wwwroot\scss\bootstrap\bootstrap.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_alert.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_background-variant.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_badge.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_border-radius.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_box-shadow.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_breakpoints.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_buttons.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_caret.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_clearfix.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_float.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_forms.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_gradients.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_grid-framework.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_grid.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_hover.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_image.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_list-group.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_lists.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_nav-divider.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_pagination.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_reset-text.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_resize.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_screen-reader.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_size.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_table-row.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_text-emphasis.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_text-hide.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_text-truncate.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_transition.scss" />
+    <None Include="wwwroot\scss\bootstrap\mixins\_visibility.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_align.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_background.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_borders.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_clearfix.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_display.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_embed.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_flex.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_float.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_position.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_screenreaders.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_shadows.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_sizing.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_spacing.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_text.scss" />
+    <None Include="wwwroot\scss\bootstrap\utilities\_visibility.scss" />
+    <None Include="wwwroot\scss\bootstrap\_alert.scss" />
+    <None Include="wwwroot\scss\bootstrap\_badge.scss" />
+    <None Include="wwwroot\scss\bootstrap\_breadcrumb.scss" />
+    <None Include="wwwroot\scss\bootstrap\_button-group.scss" />
+    <None Include="wwwroot\scss\bootstrap\_buttons.scss" />
+    <None Include="wwwroot\scss\bootstrap\_card.scss" />
+    <None Include="wwwroot\scss\bootstrap\_carousel.scss" />
+    <None Include="wwwroot\scss\bootstrap\_close.scss" />
+    <None Include="wwwroot\scss\bootstrap\_code.scss" />
+    <None Include="wwwroot\scss\bootstrap\_custom-forms.scss" />
+    <None Include="wwwroot\scss\bootstrap\_dropdown.scss" />
+    <None Include="wwwroot\scss\bootstrap\_forms.scss" />
+    <None Include="wwwroot\scss\bootstrap\_functions.scss" />
+    <None Include="wwwroot\scss\bootstrap\_grid.scss" />
+    <None Include="wwwroot\scss\bootstrap\_images.scss" />
+    <None Include="wwwroot\scss\bootstrap\_input-group.scss" />
+    <None Include="wwwroot\scss\bootstrap\_jumbotron.scss" />
+    <None Include="wwwroot\scss\bootstrap\_list-group.scss" />
+    <None Include="wwwroot\scss\bootstrap\_media.scss" />
+    <None Include="wwwroot\scss\bootstrap\_mixins.scss" />
+    <None Include="wwwroot\scss\bootstrap\_modal.scss" />
+    <None Include="wwwroot\scss\bootstrap\_nav.scss" />
+    <None Include="wwwroot\scss\bootstrap\_navbar.scss" />
+    <None Include="wwwroot\scss\bootstrap\_pagination.scss" />
+    <None Include="wwwroot\scss\bootstrap\_popover.scss" />
+    <None Include="wwwroot\scss\bootstrap\_print.scss" />
+    <None Include="wwwroot\scss\bootstrap\_progress.scss" />
+    <None Include="wwwroot\scss\bootstrap\_reboot.scss" />
+    <None Include="wwwroot\scss\bootstrap\_root.scss" />
+    <None Include="wwwroot\scss\bootstrap\_tables.scss" />
+    <None Include="wwwroot\scss\bootstrap\_tooltip.scss" />
+    <None Include="wwwroot\scss\bootstrap\_transitions.scss" />
+    <None Include="wwwroot\scss\bootstrap\_type.scss" />
+    <None Include="wwwroot\scss\bootstrap\_utilities.scss" />
+    <None Include="wwwroot\scss\bootstrap\_variables.scss" />
+    <None Include="wwwroot\scss\style.scss" />
+    <None Include="wwwroot\scss\_site-base.scss" />
+    <None Include="wwwroot\scss\_site-blocks.scss" />
+    <None Include="wwwroot\scss\_site-navbar.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
+    <PackageReference Include="PagedList.Core.Mvc" Version="3.0.0" />
+    <PackageReference Include="PagedList.Mvc" Version="4.5.0" />
+  </ItemGroup>
 
 </Project>

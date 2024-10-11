@@ -1,0 +1,47 @@
+﻿@model Medicine
+@{
+    var Categories = new SelectList(ViewBag.Categories, "Id", "Name");
+}
+
+<div class="form-group">
+    <label class="col-form-label" asp-for="Name"> Name</label>
+    <input class="form-control" asp-for="Name" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="Price"></label>
+    <input class="form-control" asp-for="Price" />
+    <span asp-validation-for="Price" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="Description"></label>
+    <input class="form-control" asp-for="Description" />
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="Stock"></label>
+    <input class="form-control" asp-for="Stock" />
+    <span asp-validation-for="Stock" class="text-danger"></span>
+</div>
+
+
+<div class="form-group">
+    <label class="col-form-label" asp-for="Cat_Id">Category</label>
+    <select asp-for="Cat_Id" class="form form-control" asp-items="Categories">
+        <option value="@null">-- Select Category --</option>
+    </select>
+    <span asp-validation-for="Cat_Id" class="text-danger"></span>
+</div>
+
+    <div class="form-group mt-3">
+        <label for="ImageFile" class="control-label mb-2">Upload Image</label>
+        <input type="file" required id="Image" name="Image" class="form-control" />
+    </div>
+
+@if (@Model?.ImageName !=null)
+{
+    <div class="form-group mt-3">
+        <img src="~/files/images/@Model?.ImageName" class="img-thumbnail" alt="@Model?.Name" width="150" />
+    </div>
+}
+

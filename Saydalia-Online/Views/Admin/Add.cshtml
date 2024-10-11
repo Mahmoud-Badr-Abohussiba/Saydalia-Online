@@ -1,0 +1,74 @@
+﻿@model Medicine
+@{
+    ViewData["Title"] = "Create New Medicine";
+}
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1 class="text-center text-primary mb-5">Add a New Medicine</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <form asp-action="Add" asp-controller="Admin" method="post">
+                    <div asp-vali dation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group d-flex align-items-center">
+                        <label asp-for="Name" class="mr-2" style="width: 150px;">Name</label>
+                        <input asp-for="Name" class="form-control flex-grow-1" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <label asp-for="Description" class="mr-2" style="width: 150px;">Description</label>
+                        <input asp-for="Description" class="form-control flex-grow-1" style="height: 100px;  />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <label asp-for="Price" class="mr-2" style="width: 150px;">Price</label>
+                        <input asp-for="Price" class="form-control flex-grow-1" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <label asp-for="Stock" class="mr-2" style="width: 150px;">Stock</label>
+                        <input asp-for="Stock" class="form-control flex-grow-1" />
+                        <span asp-validation-for="Stock" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <label asp-for="Categories" class="mr-2" style="width: 150px;">Categories</label>
+                        <select asp-for="Categories" class="form-control flex-grow-1">
+                            <option value="">-- Select a Category --</option>
+                            <option value="Category1">Category 1</option>
+                            <option value="Category2">Category 2</option>
+                            <option value="Category3">Category 3</option>
+                        </select>
+                        <span asp-validation-for="Categories" class="text-danger"></span>
+                    </div>
+
+
+                    <div>
+                        <input type="file" asp-for="ImageName" onchange="loadFile(event)" />
+                        <img id="myImg" height="200" />
+                    </div>
+
+                    <div class="form-group my-3 align-content-center text-left">
+                        <input type="submit" value="Create" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-controller="Admin" asp-action="Home">Show All Medicine</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        var loadFile = function (event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var myImg = document.getElementById('myImg');
+                myImg.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+}
