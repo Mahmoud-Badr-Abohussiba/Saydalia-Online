@@ -11,6 +11,8 @@ namespace Saydalia_Online.Models
         public decimal? TotalAmount { get; set; }        
         public string Status { get; set; }
         public string? Address { get; set; }
+
+        [EgyptianPhoneNumber(ErrorMessage = "Please enter a valid Egyptian phone number.")]
         public string? Phone { get; set; }
 
         // Navigation Properties

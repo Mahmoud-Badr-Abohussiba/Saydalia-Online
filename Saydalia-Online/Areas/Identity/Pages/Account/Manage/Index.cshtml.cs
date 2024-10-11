@@ -49,12 +49,14 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account.Manage
         {
             [Phone]
             [Display(Name = "Phone number")]
+            [EgyptianPhoneNumber(ErrorMessage = "Please enter a valid Egyptian phone number.")]
             public string PhoneNumber { get; set; }
 
             public string NewName { get; set; }
 
             [Phone]
             [Display(Name = "New phone number")]
+            [EgyptianPhoneNumber(ErrorMessage = "Please enter a valid Egyptian phone number.")]
             public string NewPhone { get; set; }
 
             [NotMapped]

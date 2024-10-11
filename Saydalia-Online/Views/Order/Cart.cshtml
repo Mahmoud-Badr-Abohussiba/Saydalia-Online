@@ -1,6 +1,4 @@
-﻿
-
-@model Order
+﻿@model Order
 @{
     ViewData["Title"] = "Cart";
 }
@@ -18,6 +16,7 @@
 
 <div class="site-section">
     <div class="container">
+      
         @if (Model.OrderItems.Count() > 0)
         {
             <div class="row mb-5">
@@ -69,6 +68,12 @@
 
             <!-- Delivery Information Form -->
             <form asp-action="Confirm" asp-controller="Order" method="post">
+                @if (TempData["errorMessage"] != null)
+                {
+                    <div class="row mb-3 alert-danger col-lg-6">
+                        <p>@TempData["errorMessage"]</p>
+                    </div>
+                }
                 <div class="row mb-5">
                     <div class="col-md-6">
                         <div class="row mb-3">

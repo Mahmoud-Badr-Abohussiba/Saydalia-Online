@@ -13,6 +13,11 @@ public class Saydalia_Online_AuthUser : IdentityUser
     public string name { get; set; }
     public string? ImagePath { get; set; }
 
+
+    [EgyptianPhoneNumber(ErrorMessage = "Please enter a valid Egyptian phone number.")]
+    [ProtectedPersonalData]
+    public override string? PhoneNumber { get; set; }
+
     [NotMapped]
     public IFormFile clientfile { get; set; }
 

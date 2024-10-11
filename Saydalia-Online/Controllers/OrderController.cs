@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Saydalia_Online.Interfaces.InterfaceServices;
 using Saydalia_Online.Models;
+using Saydalia_Online.ViewModels;
 using System.Security.Claims;
 using static NuGet.Packaging.PackagingConstants;
 
@@ -117,13 +118,26 @@ namespace Saydalia_Online.Controllers
         }
 
 
-        public async Task<IActionResult> Confirm(string Address,string Phone)
+        public async Task<IActionResult> Confirm(ConfirmOrderViewModel viewModel)
         {
-            // Get the logged-in user's ID from the claims
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var order = await _orderService.ConfrimAsync(userId,Address, Phone);
-            // Redirect to the cart view or wherever appropriate
-            return RedirectToAction("Index", "CheckOut", new { totalAmount = order.TotalAmount , orderId = order.Id});
+            if(ModelState.IsValid)
+            {
+				// Get the logged-in user's ID from the claims
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				var order = await _orderService.ConfrimAsync(userId, viewModel.Address, viewModel.Phone);
+				// Redirect to the cart view or wherever appropriate
+				return RedirectToAction("Index", "CheckOut", new { totalAmount = order.TotalAmount, orderId = order.Id });
+			}
+
+		    var firstError = ModelState.Values
+		                    .SelectMany(v => v.Errors)
+		                    .Select(e => e.ErrorMessage)
+		                    .FirstOrDefault();
+
+			TempData["errorMessage"] = firstError ?? "An error occurred while confirming your order.";
+
+			return RedirectToAction("Cart");
+            
         }
 
 

@@ -104,6 +104,7 @@ namespace Saydalia_Online.Areas.Identity.Pages.Account
             [Required]
             [Phone]
             [Display(Name = "phone number")]
+            [EgyptianPhoneNumber(ErrorMessage = "Please enter a valid Egyptian phone number.")]
             public string phone { get; set; }
 
             /// <summary>
