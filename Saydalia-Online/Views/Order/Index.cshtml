@@ -72,6 +72,7 @@
                             @if(item.Status == "Need Payment")
                             {
                                 <a asp-action="Index" asp-controller="CheckOut" asp-route-totalAmount="@item.TotalAmount" asp-route-orderId="@item.Id" class="btn btn-primary m-1">Checkout</a>
+                                <a asp-action="UpdateStatus" asp-controller="Order" asp-route-id="@item.Id" asp-route-Status="Canceled" class="btn btn-secondary m-1">Cancel</a>
                             }
                         </td>
                     </tr>
@@ -117,7 +118,12 @@
     }
     else
     {
-       <p>No orders created</p> 
+       <h3>No orders created</h3>
+        <div class="row">
+            <div class="col-md-3 d-flex">
+                <a class="btn btn-primary btn-lg btn-block" asp-action="Index" asp-controller="Medicine">Go to store</a>
+            </div>
+        </div>
     }
     
 </div>

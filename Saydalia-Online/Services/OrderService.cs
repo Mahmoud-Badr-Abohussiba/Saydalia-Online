@@ -14,7 +14,10 @@ namespace Saydalia_Online.Services
         private readonly IMedicineRepository _medicineRepository;
         private readonly SaydaliaOnlineContext _dbContext;
 
-        public OrderService(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository,IMedicineRepository medicineRepository , SaydaliaOnlineContext dbContext)
+        public OrderService(IOrderRepository orderRepository,
+            IOrderItemRepository orderItemRepository,
+            IMedicineRepository medicineRepository ,
+            SaydaliaOnlineContext dbContext)
         {
             _orderRepository = orderRepository;
             _orderItemRepository = orderItemRepository;
@@ -147,6 +150,14 @@ namespace Saydalia_Online.Services
 
         public async Task<int> UpdateOrder(Order order)
         {
+            if(order.Status == "Canceled" || order.Status == "Rejected")
+            {
+                foreach (var item in order.OrderItems)
+                {
+                    item.Medicine.Stock += item.Quantity;
+                    await _medicineRepository.Update(item.Medicine);
+                }
+            }
             var ord = await _orderRepository.Update(order);
             return ord;
         }

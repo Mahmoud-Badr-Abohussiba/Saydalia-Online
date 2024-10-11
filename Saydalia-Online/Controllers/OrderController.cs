@@ -49,6 +49,11 @@ namespace Saydalia_Online.Controllers
         {
             var order = await _orderService.getDetailsByIdWithItems(id);
 
+            if(order.Status == Status || order.Status == "Canceled" || order.Status == "Rejected")
+            {
+                return RedirectToAction("Index");
+            }
+
             var validStatusesForPharmacist = new List<string> { "InTransit", "Canceled", "Rejected", "Delivered" };
 
             if (User.IsInRole("Pharmacist") || User.IsInRole("Admin"))

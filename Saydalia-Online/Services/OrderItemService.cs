@@ -34,6 +34,15 @@ namespace Saydalia_Online.Services
 
         }
 
+        public async Task CancelOrderItemAsync(int itemId)
+        {
+            var item = await _orderItemRepository.GetByIdAsyncWithMedicne(itemId);
+            item.Medicine.Stock += item.Quantity;
+            await _medicineRepository.Update(item.Medicine);
+        }
+
+
+
         public async Task<OrderItem> GetByIdAsyncWithMedicne(int id)
         {
            return await _orderItemRepository.GetByIdAsyncWithMedicne(id);

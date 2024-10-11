@@ -8,5 +8,7 @@ namespace Saydalia_Online.Interfaces.InterfaceServices
 
         Task<Order> UpdateOrderItemAsync(string userId, int itemId, int quantity);
         Task<Order> DeleteOrderItemAsync(string userId, int itemId);
+
+        Task CancelOrderItemAsync(int itemId);
     }
 }
