@@ -86,7 +86,7 @@ namespace Saydalia_Online.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Pharmacist, Admin")]
-        public async Task<IActionResult> Edit([FromRoute] int id, Medicine model, IFormFile Image)
+        public async Task<IActionResult> Edit([FromRoute] int id, Medicine model, IFormFile? Image)
         {
             ViewBag.Categories = await _categoryRepository.GetAll();
 
@@ -105,13 +105,16 @@ namespace Saydalia_Online.Controllers
                     if (oldMedicine == null)
                         return BadRequest();
 
-                    if (oldMedicine.ImageName != null)
+                    if (oldMedicine.ImageName != null && Image != null)
                     {
                         string oldImageName = oldMedicine.ImageName;
                         DocumentSettings.DeleteFile(oldImageName, "images");
                     }
 
-                    model.ImageName = await DocumentSettings.UploadFile(Image, "images");
+                    if(Image != null)
+                    {
+                        model.ImageName = await DocumentSettings.UploadFile(Image, "images");
+                    }
                     model.UpdatedAt = DateTime.Now;
                 
                     var result = await _medicineRepository.Update(model);

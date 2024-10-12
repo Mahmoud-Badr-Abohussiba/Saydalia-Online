@@ -53,6 +53,7 @@
                                 <a asp-action="Details" asp-controller="Medicine" asp-route-Id="@medicine.Id">@medicine.Name</a>
                             </h3>
                             <p class="price">  $@medicine.Price</p>
+                            <a asp-action="AddToCart" asp-controller="Order" asp-route-medicineId="@medicine.Id" asp-route-quantity="1" class="btn btn-primary">Add To Cart</a>
                             @if (User.Identity.IsAuthenticated && (User.IsInRole("Pharmacist") || User.IsInRole("Admin")))
                             {
                                 <a asp-action="Edit" asp-controller="Medicine" asp-route-Id="@medicine.Id" class="btn btn-primary">Edit</a>

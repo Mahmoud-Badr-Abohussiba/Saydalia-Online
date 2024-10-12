@@ -103,7 +103,6 @@ namespace Saydalia_Online.Controllers
         }
 
 
-        [HttpPost]
         public async Task<IActionResult> AddToCart(int medicineId,int quantity)
         {
             // Get the logged-in user's ID from the claims
